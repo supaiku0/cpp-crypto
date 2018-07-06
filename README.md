@@ -8,7 +8,7 @@
 
 > note: this is currently NOT an official repo
 
-[![Build Status](https://img.shields.io/travis/ArkEcosystem/cpp-crypto/master.svg?style=flat-square)](https://travis-ci.org/ArkEcosystem/cpp-cyrpto)
+[![Build Status](https://travis-ci.org/sleepdefic1t/cpp-crypto.svg?branch=master)](https://travis-ci.org/sleepdefic1t/cpp-crypto)
 [![Latest Version](https://img.shields.io/github/release/cpp-crypto/cpp-crypto.svg?style=flat-square)](https://github.com/ArkEcosystem/cpp-crypto/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
