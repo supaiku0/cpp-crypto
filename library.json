@@ -2,10 +2,10 @@
     "name": "Ark-Cpp-Crypto",
     "keywords": "ark ecosystem, crypto, blockchain, arduino",
     "description": "Cpp Wrapper for the Ark Ecosystem",
-    "homepage": "https://github.com/Ark-IoT/Cpp-Crypto",
+    "homepage": "https://github.com/ArkEcosystem/Cpp-Crypto",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Ark-IoT/Cpp-Crypto.git"
+        "url": "https://github.com/ArkEcosystem/Cpp-Crypto.git"
     },
     "version": "0.5",
     "authors": {

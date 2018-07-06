@@ -25,7 +25,7 @@ also install platformio dependencies:
 
 ### running the tests on an Arduino board using PlatformIO
 
-**`cd` into this directory "*.../Ark-Cpp/test*"**  
+**`cd` into this directory "*.../Cpp-Crypto/test*"**  
 > ```cd test```
 
 **execute the following command to upload test to your board**  

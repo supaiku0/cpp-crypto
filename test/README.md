@@ -21,7 +21,7 @@ test
 
 ## Using PlatformIO
 
-**`cd` into this directory "*.../Ark-Cpp/test*"**  
+**`cd` into this directory "*.../Cpp-Crypto/test*"**  
 > ```cd test```
 
 **execute the following command to upload test to your board:**  
