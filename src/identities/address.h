@@ -32,7 +32,7 @@ class Address
 		uint8_t bytes_[ADDRESS_LENGTH];
 
 	public:
-    	Address() : bytes_() {};
+        Address() : bytes_() {};
         Address(const char *const newAddressStr);
 
         void setBytes(const uint8_t *newBytes);
@@ -41,13 +41,13 @@ class Address
         /*************************************************/
         // const bool isValid() { return Address::validate(*this); };
         /*************************************************/
-		const char* c_str() const;
+        const char* c_str() const;
 
         static Address fromPassphrase(const char* const passphrase, uint8_t networkVersion);
-		static Address fromPublicKey(PublicKey publicKey, uint8_t networkVersion);
+        static Address fromPublicKey(PublicKey publicKey, uint8_t networkVersion);
         static Address fromPrivateKey(PrivateKey privateKey, uint8_t networkVersion);
 
-		static bool validate(Address address, uint8_t networkVersion);
+        static bool validate(Address address, uint8_t networkVersion);
 };
 
 };
