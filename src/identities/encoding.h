@@ -19,7 +19,11 @@
 #include "bcl/Sha256.hpp"
 #include "bcl/Sha512.hpp"
 #include "bcl/Uint256.hpp"
- 
+
+#include <memory>
+#include <string>
+#include <vector>
+
 namespace Ark {
 namespace Crypto {
 namespace Identities {
@@ -33,8 +37,7 @@ namespace Identities {
 };
 };
 
-#include <vector>
-#include <memory>
+
 
 /**************************************************
  * Hex Helpers

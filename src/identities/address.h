@@ -35,8 +35,8 @@ class Address
         Address() : bytes_() {};
         Address(const char *const newAddressStr);
 
-        void setBytes(const uint8_t *newBytes);
         const uint8_t *getBytes();
+        void setBytes(const uint8_t *newBytes);
 
         /*************************************************/
         // const bool isValid() { return Address::validate(*this); };

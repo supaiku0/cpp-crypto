@@ -12,6 +12,10 @@
 
 #define HAS_CRYPTO
 
+#if (defined ARDUINO || defined ESP8266 || defined ESP32)
+	#define USE_IOT
+#endif
+
 #include "identities/privatekey.h"
 #include "identities/wif.h"
 #include "identities/publickey.h"

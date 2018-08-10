@@ -34,8 +34,8 @@ class PrivateKey
         PrivateKey(const char *const newPrivateKeyStr);
         PrivateKey(const uint8_t *newPrivateKeyBytes);
 
-        void setBytes(const uint8_t *newBytes);
         const uint8_t *getBytes();
+        void setBytes(const uint8_t *newBytes);
 
         const char* c_str() const;
 

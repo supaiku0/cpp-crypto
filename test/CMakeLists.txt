@@ -18,22 +18,10 @@ include_directories(${PROJECT_SOURCE_DIR}/../include/bcl)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
-	${PROJECT_SOURCE_DIR}/crypto/bip39.cpp
-	${PROJECT_SOURCE_DIR}/crypto/crypto.cpp
-	${PROJECT_SOURCE_DIR}/model/account.cpp
-	${PROJECT_SOURCE_DIR}/model/block.cpp
-	${PROJECT_SOURCE_DIR}/model/currency.cpp
-	${PROJECT_SOURCE_DIR}/model/delegate.cpp
-	${PROJECT_SOURCE_DIR}/model/fees.cpp
-	${PROJECT_SOURCE_DIR}/model/network.cpp
-	${PROJECT_SOURCE_DIR}/model/peer.cpp
-	${PROJECT_SOURCE_DIR}/model/transaction.cpp
-	${PROJECT_SOURCE_DIR}/model/voter.cpp
-	${PROJECT_SOURCE_DIR}/types/address.cpp
-	${PROJECT_SOURCE_DIR}/types/balance.cpp
-	${PROJECT_SOURCE_DIR}/types/hash.cpp
-	${PROJECT_SOURCE_DIR}/types/publickey.cpp
-	${PROJECT_SOURCE_DIR}/types/signature.cpp
+	${PROJECT_SOURCE_DIR}/identities/address.cpp
+	${PROJECT_SOURCE_DIR}/identities/privatekey.cpp
+	${PROJECT_SOURCE_DIR}/identities/publickey.cpp
+	${PROJECT_SOURCE_DIR}/identities/wif.cpp
 )
 
 find_library(Ark-Cpp-Crypto-tests NAMES Ark-Cpp-Crypto-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})

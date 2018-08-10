@@ -31,14 +31,15 @@ class WIF
 		uint8_t bytes_[WIF_SIZE];
 
     public:
-    	WIF() : bytes_() {};
-        WIF(const char *const newWIFStr);
+      WIF() : bytes_() {};
+      WIF(const char *const newWIFStr);
+      WIF(const uint8_t *newWIFBytes);
 
-        void setBytes(const uint8_t *newBytes);
-        const uint8_t *getBytes();
-        const char* c_str() const;
+      const uint8_t *getBytes();
+      void setBytes(const uint8_t *newBytes);
+      const char* c_str() const;
 
-        static WIF fromPassphrase(const char *const passphrase, uint8_t wifByte);
+      static WIF fromPassphrase(const char *const passphrase, uint8_t wifByte);
 };
 
 };

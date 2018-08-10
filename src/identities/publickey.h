@@ -16,11 +16,11 @@
 #include <cassert>
 #include <cstring>
 
-// #if defined(USE_IOT)
+#if defined(USE_IOT)
 	#include "uECC.h"
-// #else
-// 	#include "../include/uECC/uECC.h"
-// #endif
+#else
+	#include "../include/uECC/uECC.h"
+#endif
 
 namespace Ark {
 namespace Crypto {
@@ -41,8 +41,8 @@ class PublicKey
         PublicKey(const char *const newPublicKeyStr);
         PublicKey(const uint8_t *newPublicKeyBytes);
 
-        void setBytes(const uint8_t *newBytes);
         const uint8_t *getBytes();
+        void setBytes(const uint8_t *newBytes);
 
         bool isValid();
         const char* c_str() const;

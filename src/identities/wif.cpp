@@ -16,7 +16,16 @@ Ark::Crypto::Identities::WIF::WIF(const char *const newWIFStr)
 { 
     (std::strlen(newWIFStr) == WIF_SIZE)
         ? void(setBytes(reinterpret_cast<const unsigned char*>(newWIFStr)))
-        : void(this->bytes_[WIF_SIZE] = { '\0' });   
+        : void(this->bytes_[WIF_SIZE - 1] = { '\0' });   
+};
+/*************************************************/
+
+/**************************************************
+ * 
+ **************************************************/
+Ark::Crypto::Identities::WIF::WIF(const uint8_t *newWIFBytes)
+{
+    setBytes(newWIFBytes);
 };
 /*************************************************/
 
