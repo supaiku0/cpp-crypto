@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 
-// #include "identities/wif.h"
 #include "arkCrypto.h"
 
 namespace {
