@@ -1,0 +1,17 @@
+#include "gtest/gtest.h"
+
+#include "arkCrypto.h"
+
+TEST(enums, fees)
+{
+    Ark::Crypto::Enums::Fees fees;
+    ASSERT_EQ(10000000u, fees.TRANSFER);
+    ASSERT_EQ(500000000u, fees.SECOND_SIGNATURE_REGISTRATION);
+    ASSERT_EQ(2500000000u, fees.DELEGATE_REGISTRATION);
+    ASSERT_EQ(100000000u, fees.VOTE);
+    ASSERT_EQ(500000000u, fees.MULTI_SIGNATURE_REGISTRATION);
+    ASSERT_EQ(0, fees.IPFS);
+    ASSERT_EQ(0, fees.TIMELOCK_TRANSFER);
+    ASSERT_EQ(0, fees.MULTI_PAYMENT);
+    ASSERT_EQ(0, fees.DELEGATE_RESIGNATION);
+}

@@ -18,6 +18,9 @@ include_directories(${PROJECT_SOURCE_DIR}/../src/bcl)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
+	${PROJECT_SOURCE_DIR}/configuration/fee.cpp
+	${PROJECT_SOURCE_DIR}/enums/fees.cpp
+	${PROJECT_SOURCE_DIR}/enums/types.cpp
 	${PROJECT_SOURCE_DIR}/identities/address.cpp
 	${PROJECT_SOURCE_DIR}/identities/privatekey.cpp
 	${PROJECT_SOURCE_DIR}/identities/publickey.cpp
