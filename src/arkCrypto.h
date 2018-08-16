@@ -16,10 +16,9 @@
 	#define USE_IOT
 #endif
 
-#include "enums/fees.h"
 #include "enums/types.h"
+#include "enums/fees.h"
 #include "configuration/fee.h"
-
 
 #include "identities/privatekey.h"
 #include "identities/wif.h"
@@ -28,5 +27,6 @@
 
 using namespace Ark::Crypto::Identities;
 using namespace Ark::Crypto::Configuration;
+using namespace Ark::Crypto::Enums;
 
 #endif
