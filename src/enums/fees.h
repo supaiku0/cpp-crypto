@@ -20,6 +20,8 @@ namespace Enums {
  **************************************************/
 struct Fees
 {
+    public:
+    
     static const unsigned int TRANSFER                      = 10000000;
     static const unsigned int SECOND_SIGNATURE_REGISTRATION = 500000000;
     static const unsigned int DELEGATE_REGISTRATION         = 2500000000; // note: implementation limits integer capacity to ~ 4000000000
