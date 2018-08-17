@@ -19,12 +19,17 @@ include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/configuration/fee.cpp
+	${PROJECT_SOURCE_DIR}/configuration/network.cpp
 	${PROJECT_SOURCE_DIR}/enums/fees.cpp
 	${PROJECT_SOURCE_DIR}/enums/types.cpp
 	${PROJECT_SOURCE_DIR}/identities/address.cpp
 	${PROJECT_SOURCE_DIR}/identities/privatekey.cpp
 	${PROJECT_SOURCE_DIR}/identities/publickey.cpp
 	${PROJECT_SOURCE_DIR}/identities/wif.cpp
+	${PROJECT_SOURCE_DIR}/networks/abstractnetwork.cpp
+	${PROJECT_SOURCE_DIR}/networks/devnet.cpp
+	${PROJECT_SOURCE_DIR}/networks/mainnet.cpp
+	${PROJECT_SOURCE_DIR}/networks/testnet.cpp
 )
 
 find_library(Ark-Cpp-Crypto-tests NAMES Ark-Cpp-Crypto-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})

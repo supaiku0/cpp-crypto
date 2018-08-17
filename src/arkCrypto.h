@@ -19,14 +19,21 @@
 #include "enums/types.h"
 #include "enums/fees.h"
 #include "configuration/fee.h"
+#include "configuration/network.h"
 
 #include "identities/privatekey.h"
 #include "identities/wif.h"
 #include "identities/publickey.h"
 #include "identities/address.h"
 
-using namespace Ark::Crypto::Identities;
+#include "networks/abstractnetwork.h"
+#include "networks/devnet.h"
+#include "networks/mainnet.h"
+#include "networks/testnet.h"
+
 using namespace Ark::Crypto::Configuration;
 using namespace Ark::Crypto::Enums;
+using namespace Ark::Crypto::Identities;
+using namespace Ark::Crypto::Networks;
 
 #endif

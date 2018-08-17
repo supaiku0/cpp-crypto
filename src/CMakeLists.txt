@@ -13,10 +13,13 @@ include_directories(
  
 set(COMMON_SRC 
 	${PROJECT_SOURCE_DIR}/configuration/fee.cpp
+	${PROJECT_SOURCE_DIR}/configuration/network.cpp
 	${PROJECT_SOURCE_DIR}/identities/privatekey.cpp
 	${PROJECT_SOURCE_DIR}/identities/wif.cpp
 	${PROJECT_SOURCE_DIR}/identities/publickey.cpp
 	${PROJECT_SOURCE_DIR}/identities/address.cpp
+	${PROJECT_SOURCE_DIR}/networks/abstractnetwork.cpp
+
 )
 
 set (BCL_SRC
