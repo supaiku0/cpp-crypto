@@ -28,10 +28,10 @@ namespace Ark {
 namespace Crypto {
 namespace Identities {
 
-	const auto ADDRESS_LENGTH = 34u;
-	const auto COMPRESSED_PUBLICKEY_SIZE = 33u;
-	const auto PRIVATEKEY_SIZE = 32u;
-	const auto WIF_SIZE = 52u;
+    const auto ADDRESS_LENGTH = 34u;
+    const auto COMPRESSED_PUBLICKEY_SIZE = 33u;
+    const auto PRIVATEKEY_SIZE = 32u;
+    const auto WIF_SIZE = 52u;
 
 };
 };
@@ -45,22 +45,22 @@ namespace Identities {
 template<typename T>
 static std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = false)
 {
-	std::string rv;
-	static const char hexmap[16] = {
-		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-		'a', 'b', 'c', 'd', 'e', 'f'
-	};
-	rv.reserve((itend - itbegin) * 3);
-	for (T it = itbegin; it < itend; ++it)
-	{
-		unsigned char val = (unsigned char)(*it);
-		if (fSpaces && it != itbegin)
-			rv.push_back(' ');
-		rv.push_back(hexmap[val >> 4]);
-		rv.push_back(hexmap[val & 15]);
-	}
+    std::string rv;
+    static const char hexmap[16] = {
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'a', 'b', 'c', 'd', 'e', 'f'
+    };
+    rv.reserve((itend - itbegin) * 3);
+    for (T it = itbegin; it < itend; ++it)
+    {
+        unsigned char val = (unsigned char)(*it);
+        if (fSpaces && it != itbegin)
+            rv.push_back(' ');
+        rv.push_back(hexmap[val >> 4]);
+        rv.push_back(hexmap[val & 15]);
+    }
 
-	return rv;
+    return rv;
 };
 
 /*************************************************/
@@ -68,7 +68,7 @@ static std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = fal
 template<typename T>
 static inline std::string BytesToHex(const T& vch, bool fSpaces = false)
 {
-	return BytesToHex(vch.begin(), vch.end(), fSpaces);
+    return BytesToHex(vch.begin(), vch.end(), fSpaces);
 };
 
 /*************************************************/
@@ -95,30 +95,30 @@ static const signed char p_util_hexdigit[256] =
 
 static signed char HexDigit(char c)
 {
-	return p_util_hexdigit[(unsigned char)c];
+    return p_util_hexdigit[(unsigned char)c];
 };
 
 /*************************************************/
 
 static std::vector<unsigned char> ParseHex(const char* psz)
 {
-	// convert hex dump to vector
-	std::vector<unsigned char> vch;
-	while (true)
-	{
-		while (isspace(*psz))
-			psz++;
-		signed char c = HexDigit(*psz++);
-		if (c == (signed char)-1)
-			break;
-		unsigned char n = (c << 4);
-		c = HexDigit(*psz++);
-		if (c == (signed char)-1)
-			break;
-		n |= c;
-		vch.push_back(n);
-	}
-	return vch;
+    // convert hex dump to vector
+    std::vector<unsigned char> vch;
+    while (true)
+    {
+        while (isspace(*psz))
+            psz++;
+        signed char c = HexDigit(*psz++);
+        if (c == (signed char)-1)
+            break;
+        unsigned char n = (c << 4);
+        c = HexDigit(*psz++);
+        if (c == (signed char)-1)
+            break;
+        n |= c;
+        vch.push_back(n);
+    }
+    return vch;
 };
 
 /*************************************************/
@@ -126,20 +126,22 @@ static std::vector<unsigned char> ParseHex(const char* psz)
 template<typename T>
 std::string HexStr(const T itbegin, const T itend, bool fSpaces = false)
 {
-	std::string rv;
-	const char hexmap[16] = { '0', '1', '2', '3', '4', '5', '6', '7',
-		'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	rv.reserve((itend - itbegin) * 3);
-	for (T it = itbegin; it < itend; ++it)
-	{
-		unsigned char val = (unsigned char)(*it);
-		if (fSpaces && it != itbegin)
-			rv.push_back(' ');
-		rv.push_back(hexmap[val >> 4]);
-		rv.push_back(hexmap[val & 15]);
-	}
+    std::string rv;
+    const char hexmap[16] = {
+        '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
+    rv.reserve((itend - itbegin) * 3);
+    for (T it = itbegin; it < itend; ++it)
+    {
+        unsigned char val = (unsigned char)(*it);
+        if (fSpaces && it != itbegin)
+            rv.push_back(' ');
+        rv.push_back(hexmap[val >> 4]);
+        rv.push_back(hexmap[val & 15]);
+    }
 
-	return rv;
+    return rv;
 }
 
 /*************************************************/
@@ -147,7 +149,7 @@ std::string HexStr(const T itbegin, const T itend, bool fSpaces = false)
 template<typename T>
 inline std::string HexStr(const T& vch, bool fSpaces = false)
 {
-	return HexStr(vch.begin(), vch.end(), fSpaces);
+    return HexStr(vch.begin(), vch.end(), fSpaces);
 }
 /*************************************************/
 /*************************************************/
@@ -166,13 +168,13 @@ inline std::string HexStr(const T& vch, bool fSpaces = false)
 // };
 
 // static void Sanitize(
-// 		uint8_t* buffer,
-// 		size_t size
+//      uint8_t* buffer,
+//      size_t size
 // ) {
-// 	for (unsigned int i = 0; i < size; i++)
-// 	{
-// 		buffer[i] = getRandomDigit();
-// 	};
+//  for (unsigned int i = 0; i < size; i++)
+//  {
+//      buffer[i] = getRandomDigit();
+//  };
 // };
 /*************************************************/
 

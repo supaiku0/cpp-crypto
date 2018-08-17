@@ -46,13 +46,6 @@ TEST(identities, publickey_get_bytes)
     };
 }
 
-TEST(identities, publickey_set_bytes)
-{
-    PublicKey publicKey;
-    publicKey.setBytes(testPublicKeyBytes);
-    ASSERT_STREQ("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4", publicKey.c_str());
-}
-
 TEST(identities, publickey_validate)
 {
     PublicKey publicKey("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4");

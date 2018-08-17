@@ -35,8 +35,7 @@ class PrivateKey
         PrivateKey(const uint8_t *newPrivateKeyBytes);
 
         const uint8_t *getBytes();
-        void setBytes(const uint8_t *newBytes);
-
+        
         const char* c_str() const;
 
         static PrivateKey fromPassphrase(const char* const passphrase);

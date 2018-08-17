@@ -42,8 +42,7 @@ class PublicKey
         PublicKey(const uint8_t *newPublicKeyBytes);
 
         const uint8_t *getBytes();
-        void setBytes(const uint8_t *newBytes);
-
+        
         bool isValid();
         const char* c_str() const;
 

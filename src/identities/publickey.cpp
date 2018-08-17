@@ -14,9 +14,7 @@
  **************************************************/
 Ark::Crypto::Identities::PublicKey::PublicKey(const char *const newPublicKeyStr)
 { 
-    (Ark::Crypto::Identities::PublicKey::validate(newPublicKeyStr))
-        ? void(setBytes(&ParseHex(newPublicKeyStr).data()[0]))
-        : void(this->bytes_[COMPRESSED_PUBLICKEY_SIZE - 1] = { '\0' });     
+    std::memmove(this->bytes_, &ParseHex(newPublicKeyStr).data()[0], COMPRESSED_PUBLICKEY_SIZE);
 };
 /*************************************************/
 
@@ -25,18 +23,7 @@ Ark::Crypto::Identities::PublicKey::PublicKey(const char *const newPublicKeyStr)
  **************************************************/
 Ark::Crypto::Identities::PublicKey::PublicKey(const uint8_t *newPublicKeyBytes)
 { 
-    (PublicKey::validate(newPublicKeyBytes))
-        ? void(setBytes(newPublicKeyBytes))
-        : void(this->bytes_[COMPRESSED_PUBLICKEY_SIZE - 1] = { '\0' });
-};
-/*************************************************/
-
-/**************************************************
- * 
- **************************************************/
-void Ark::Crypto::Identities::PublicKey::setBytes(const uint8_t *newBytes)
-{
-    std::memmove(this->bytes_, newBytes, COMPRESSED_PUBLICKEY_SIZE);
+    std::memmove(this->bytes_, newPublicKeyBytes, COMPRESSED_PUBLICKEY_SIZE);
 };
 /*************************************************/
 

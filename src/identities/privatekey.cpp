@@ -14,9 +14,7 @@
  **************************************************/
 Ark::Crypto::Identities::PrivateKey::PrivateKey(const char *const newPrivateKeyStr)
 { 
-    (PrivateKey::validate(newPrivateKeyStr))
-        ? void(setBytes(&ParseHex(newPrivateKeyStr).data()[0]))
-        : void(this->bytes_[PRIVATEKEY_SIZE - 1] = { '\0' });     
+    std::memmove(this->bytes_, &ParseHex(newPrivateKeyStr).data()[0], PRIVATEKEY_SIZE);    
 };
 /*************************************************/
 
@@ -25,18 +23,7 @@ Ark::Crypto::Identities::PrivateKey::PrivateKey(const char *const newPrivateKeyS
  **************************************************/
 Ark::Crypto::Identities::PrivateKey::PrivateKey(const uint8_t *newPrivateKeyBytes)
 { 
-    (PrivateKey::validate(newPrivateKeyBytes))
-        ? void(setBytes(newPrivateKeyBytes))
-        : void(this->bytes_[PRIVATEKEY_SIZE - 1] = { '\0' });
-};
-/*************************************************/
-
-/**************************************************
- * 
- **************************************************/
-void Ark::Crypto::Identities::PrivateKey::setBytes(const uint8_t *newBytes)
-{
-    std::memmove(this->bytes_, newBytes, PRIVATEKEY_SIZE);
+    std::memmove(this->bytes_, newPrivateKeyBytes, PRIVATEKEY_SIZE);
 };
 /*************************************************/
 
