@@ -57,7 +57,7 @@ bool Ark::Crypto::Identities::PublicKey::isValid() { return PublicKey::validate(
  **************************************************/
 const char* Ark::Crypto::Identities::PublicKey::c_str() const
 {
-    return BytesToHex(this->bytes_, &this->bytes_[0] + COMPRESSED_PUBLICKEY_SIZE).c_str();
+    return BytesToHex(this->bytes_, this->bytes_ + COMPRESSED_PUBLICKEY_SIZE).c_str();
 };
 /*************************************************/
 
