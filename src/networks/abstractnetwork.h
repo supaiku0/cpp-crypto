@@ -11,7 +11,7 @@
 #ifndef ABSTRACT_NETWORK_H
 #define ABSTRACT_NETWORK_H
 
-#include <string>
+#include <cstring>
 #include <vector>
 #include <unordered_map>
 
