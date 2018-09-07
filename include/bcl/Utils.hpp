@@ -9,6 +9,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
 
 /* 
@@ -33,6 +34,9 @@ class Utils final {
 	public: static void copyBytes(void *dest, const void *src, std::size_t count);
 	
 	
-	private: Utils();
+	public: static void storeBigUint32(std::uint32_t x, std::uint8_t arr[4]);
+	
+	
+	Utils() = delete;  // Not instantiable
 	
 };
