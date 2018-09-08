@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include "arkCrypto.h"
 
 namespace {
@@ -12,6 +12,7 @@ TEST(identities, address_from_passphrase)
     Address address = Address::fromPassphrase(passphrase, networkVersion);
     ASSERT_STREQ("DStZXkgpEjxbG355nQ26vnkp95p24U9tsV", address.c_str());
 }
+
 TEST(identities, address_from_privatekey)
 {
     PrivateKey privateKey("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");

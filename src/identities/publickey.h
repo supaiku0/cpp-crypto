@@ -1,36 +1,27 @@
-/**************************************************
+/**
  * This file is part of Ark Cpp Crypto.
  *
  * (c) Ark Ecosystem <info@ark.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- **************************************************/
+ **/
 
 #ifndef PUBLICKEY_H
 #define PUBLICKEY_H
 
-#include "identities/encoding.h"
+#include "helpers/encoding.h"
 #include "identities/privatekey.h"
-
-#include <cassert>
-#include <cstring>
-
-#if defined(USE_IOT)
-	#include "uECC.h"
-#else
-	#include "../include/uECC/uECC.h"
-#endif
+#include "uECC.h"
 
 namespace Ark {
 namespace Crypto {
 namespace Identities {
-
-/**************************************************
+/**
  * This is the public key class.
  *
  * @author Simon Downey <simon@ark.io>
- **************************************************/
+ **/
 class PublicKey
 {
 	protected:
@@ -41,7 +32,7 @@ class PublicKey
         PublicKey(const char *const newPublicKeyStr);
         PublicKey(const uint8_t *newPublicKeyBytes);
 
-        const uint8_t *getBytes();
+        const uint8_t *toBytes();
         
         bool isValid();
         const char* c_str() const;
@@ -50,11 +41,11 @@ class PublicKey
         static PublicKey fromPrivateKey(PrivateKey privateKey);
         static PublicKey fromHex(const char *const publicKey);
  
-        static bool validate(const char *publicKeyStr);
         static bool validate(PublicKey publicKey);
+        static bool validate(const char *publicKeyStr);
         static bool validate(const uint8_t *publicKeyBytes);
 };
-
+/**/
 };
 };
 };

@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include "arkCrypto.h"
 
 TEST(configuration, fee_get)

@@ -1,11 +1,11 @@
-/**************************************************
+/**
  * This file is part of Ark Cpp Crypto.
  *
  * (c) Ark Ecosystem <info@ark.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- **************************************************/
+ **/
 
 #ifndef TYPES_H
 #define TYPES_H
@@ -13,11 +13,11 @@
 namespace Ark {
 namespace Crypto {
 namespace Enums {
-/**************************************************
+/**
  * This is the transaction types class.
  *
  * @author Simon Downey <simon@ark.io>
- **************************************************/
+ **/
 enum Types : int
 {
     TRANSFER                      = 0,
@@ -30,7 +30,7 @@ enum Types : int
     MULTI_PAYMENT                 = 7,
     DELEGATE_RESIGNATION          = 8
 };
-/**************************************************/
+/**/
 };
 };
 };

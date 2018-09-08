@@ -12,11 +12,15 @@ HunterGate(
 project(Ark-Cpp-Crypto)
 
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
- 
+
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
- 
+
 set(PROJECT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+
+include_directories(${PROJECT_INCLUDE_DIR}/bcl)
+include_directories(${PROJECT_INCLUDE_DIR}/uECC)
+include_directories(${PROJECT_INCLUDE_DIR}/rfc6979)
 
 # clone submodules
 execute_process(
@@ -25,12 +29,15 @@ execute_process(
 )
 
 if (MSVC)
-	add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DNOMINMAX)
+	add_definitions(
+		-D_CRT_SECURE_NO_WARNINGS
+		-D_SCL_SECURE_NO_WARNINGS
+		-DNOMINMAX
+	)
 elseif (UNIX)
 	set (CMAKE_CXX_FLAGS "-std=c++11")
 endif()
 
- 
 include_directories("${PROJECT_INCLUDE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 

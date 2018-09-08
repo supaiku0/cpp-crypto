@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include "arkCrypto.h"
 
 namespace {
@@ -39,7 +39,7 @@ TEST(identities, publickey_from_string)
 TEST(identities, publickey_get_bytes)
 {
     PublicKey publicKey("029fdf41a7d69d8efc7b236c21b9509a23d862ea4ed8b13a56e31eee58dbfd97b4");
-    const auto publicKeyBytes = publicKey.getBytes();
+    const auto publicKeyBytes = publicKey.toBytes();
     for (unsigned int i = 0; i < COMPRESSED_PUBLICKEY_SIZE; i++)
     {
         ASSERT_EQ(publicKeyBytes[i], testPublicKeyBytes[i]);

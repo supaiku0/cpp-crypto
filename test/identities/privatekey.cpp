@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include "arkCrypto.h"
 
 namespace {
@@ -12,9 +12,15 @@ namespace {
 
 }
 
-TEST(identities, privatekey_from_bytes)
+TEST(identities, privatekey_construct_bytes)
 {
     PrivateKey privateKey(testPrivateKeyBytes);
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+}
+
+TEST(identities, privatekey_construct_string)
+{
+    PrivateKey privateKey("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");
     ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
 }
 
@@ -46,7 +52,7 @@ TEST(identities, privatekey_from_wif_string)
 TEST(identities, privatekey_get_bytes)
 {
     PrivateKey privateKey("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");
-    const auto privateKeyBytes = privateKey.getBytes();
+    const auto privateKeyBytes = privateKey.toBytes();
     for (unsigned int i = 0; i < PRIVATEKEY_SIZE; i++)
     {
         ASSERT_EQ(privateKeyBytes[i], testPrivateKeyBytes[i]);

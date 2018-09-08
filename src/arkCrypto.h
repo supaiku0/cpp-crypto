@@ -1,11 +1,11 @@
-/**************************************************
+/**
  * This file is part of Ark Cpp Crypto.
  *
  * (c) Ark Ecosystem <info@ark.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- **************************************************/
+ **/
 
 #ifndef ARKCRYPTO_H
 #define ARKCRYPTO_H
@@ -13,7 +13,7 @@
 #define HAS_CRYPTO
 
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
-	#define USE_IOT
+    #define USE_IOT
 #endif
 
 #include "enums/types.h"
@@ -30,6 +30,8 @@
 #include "networks/devnet.h"
 #include "networks/mainnet.h"
 #include "networks/testnet.h"
+
+#include "utils/message.h"
 
 using namespace Ark::Crypto::Configuration;
 using namespace Ark::Crypto::Enums;

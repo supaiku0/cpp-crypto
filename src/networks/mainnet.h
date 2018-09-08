@@ -1,11 +1,11 @@
-/**************************************************
+/**
  * This file is part of Ark Cpp Crypto.
  *
  * (c) Ark Ecosystem <info@ark.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- **************************************************/
+ **/
 
 #ifndef MAINNET_H
 #define MAINNET_H
@@ -15,11 +15,11 @@
 namespace Ark {
 namespace Crypto {
 namespace Networks {
-/**************************************************
+/**
  * @brief This is the mainnet network class.
  *
  * @author Simon Downey <simon@ark.io>
- **************************************************/
+ **/
 const AbstractNetwork Mainnet = {
     { 
         0x17,   // BASE58_ADDRESS_P2PKH
@@ -32,12 +32,9 @@ const AbstractNetwork Mainnet = {
     },
     "2017-03-21T13:00:00.000Z" // Epoch
 };
-/**************************************************/
+/**/
 };
 };
 };
 
 #endif
-
-
- 

@@ -14,7 +14,7 @@ set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../lib")
 set(COVERAGE OFF CACHE BOOL "Coverage")
 
 include_directories(${PROJECT_SOURCE_DIR}/../src)
-include_directories(${PROJECT_SOURCE_DIR}/../src/bcl)
+include_directories(${PROJECT_SOURCE_DIR}/../include/bcl)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set (TEST_SRC
@@ -30,9 +30,13 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/networks/devnet.cpp
 	${PROJECT_SOURCE_DIR}/networks/mainnet.cpp
 	${PROJECT_SOURCE_DIR}/networks/testnet.cpp
+	${PROJECT_SOURCE_DIR}/utils/message.cpp
 )
 
-find_library(Ark-Cpp-Crypto-tests NAMES Ark-Cpp-Crypto-lib PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+find_library(Ark-Cpp-Crypto-tests
+	NAMES Ark-Cpp-Crypto-lib
+	PATHS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+)
 
 add_executable(Ark-Cpp-Crypto-tests ${TEST_SRC})
 

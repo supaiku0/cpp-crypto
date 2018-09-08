@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include "arkCrypto.h"
 
 namespace {
@@ -33,16 +33,9 @@ TEST(identities, wif_from_string)
 TEST(identities, wif_get_bytes)
 {
     WIF wif("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB");
-    const auto wifBytes = wif.getBytes();
+    const auto wifBytes = wif.toBytes();
     for (unsigned int i = 0; i < WIF_SIZE; i++)
     {
         ASSERT_EQ(wifBytes[i], testWIFBytes[i]);
     };
-}
-
-TEST(identities, wif_set_bytes)
-{
-    WIF wif;
-    wif.setBytes(testWIFBytes);
-    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.c_str());
 }

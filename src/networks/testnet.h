@@ -1,11 +1,11 @@
-/**************************************************
+/**
  * This file is part of Ark Cpp Crypto.
  *
  * (c) Ark Ecosystem <info@ark.io>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- **************************************************/
+ **/
 
 #ifndef TESTNET_H
 #define TESTNET_H
@@ -15,11 +15,11 @@
 namespace Ark {
 namespace Crypto {
 namespace Networks {
-/**************************************************
+/**
  * @brief This is the testnet network class.
  *
  * @author Simon Downey <simon@ark.io>
- **************************************************/
+ **/
 const AbstractNetwork Testnet = {
     { 
         0x17,   // BASE58_ADDRESS_P2PKH
@@ -32,7 +32,7 @@ const AbstractNetwork Testnet = {
     },
     "2017-03-21T13:00:00.000Z" // Epoch
 };
-/**************************************************/
+/**/
 };
 };
 };
