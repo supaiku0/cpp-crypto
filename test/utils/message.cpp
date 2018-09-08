@@ -29,14 +29,13 @@ TEST(utils, message_to_array)
     const auto messageArray = message.toArray();
 
     ASSERT_STREQ("publickey", messageArray[0].first);
-    const PublicKey publicKey(messageArray[0].second);
-    ASSERT_STREQ(expectedPublicKey, publicKey.c_str());
+    ASSERT_STREQ(expectedPublicKey, messageArray[0].second.c_str());
 
     ASSERT_STREQ("signature", messageArray[1].first);
-    ASSERT_STREQ(expectedSignature, HexStr(messageArray[1].second, messageArray[1].second + (messageArray[1].second[1] + 2)).c_str());
+    ASSERT_STREQ(expectedSignature, messageArray[1].second.c_str());
 
     ASSERT_STREQ("message", messageArray[2].first);
-    ASSERT_STREQ(text, reinterpret_cast<const char*>(messageArray[2].second));
+    ASSERT_STREQ(text, messageArray[2].second.c_str());
 }
 
 TEST(utils, message_to_json)

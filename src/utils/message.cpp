@@ -97,12 +97,17 @@ bool Ark::Crypto::Utils::Message::verify()
  *
  * @return std::vector< std::pair<const char*, const uint8_t*> >
  **/
-std::vector<std::pair<const char*, const uint8_t*>> Ark::Crypto::Utils::Message::toArray()
+std::vector<std::pair<const char*, std::string>> Ark::Crypto::Utils::Message::toArray()
 {
     return {
-        { "publickey", this->publicKey.toBytes() },
-        { "signature", this->signature.data() },
-        { "message",  reinterpret_cast<const unsigned char*>(this->message.c_str()) }
+        { "publickey", this->publicKey.c_str() },
+        { "signature", HexStr(
+                &this->signature[0],
+                &this->signature[0]
+                + this->signature.size()
+            )
+        },
+        { "message", this->message }
     };
 };
 /**/
@@ -121,23 +126,19 @@ std::string Ark::Crypto::Utils::Message::toJson()
     messageJsonString += messageArray[0].first;
     messageJsonString += "\":\"";
 
-    messageJsonString += PublicKey(messageArray[0].second).c_str();
+    messageJsonString += messageArray[0].second;
 
     messageJsonString += "\",\"";
     messageJsonString += messageArray[1].first;
     messageJsonString += "\":\"";
 
-    messageJsonString += HexStr(
-            &messageArray[1].second[0],
-            &messageArray[1].second[0]
-            + messageArray[1].second[1] + 2 // ecdsa DER-encoded signature size is always byte[1] + 2
-    ).c_str();
+    messageJsonString += messageArray[1].second;
 
     messageJsonString += "\",\"";
     messageJsonString += messageArray[2].first;
     messageJsonString += "\":\"";
 
-    messageJsonString += reinterpret_cast<const char*>(messageArray[2].second);
+    messageJsonString += messageArray[2].second;
 
     messageJsonString += "\"}";
 
