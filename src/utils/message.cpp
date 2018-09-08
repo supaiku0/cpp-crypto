@@ -8,7 +8,6 @@
  **/
 
 #include "utils/message.h"
-#include <iostream>
 
 /**
  * Sign a message using the given passphrase.

@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
 #include "arkCrypto.h"
-
-// #include <iostream>
 #include <unordered_map>
 
 namespace {
