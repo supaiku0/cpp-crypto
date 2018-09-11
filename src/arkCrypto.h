@@ -32,6 +32,7 @@
 #include "networks/testnet.h"
 
 #include "utils/message.h"
+#include "utils/slot.h"
 
 using namespace Ark::Crypto::Configuration;
 using namespace Ark::Crypto::Enums;
