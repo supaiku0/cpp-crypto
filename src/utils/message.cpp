@@ -52,6 +52,24 @@ bool Ark::Crypto::Utils::Message::verify()
     uECC_decompress(publicKeyBytes, uncompressedPublicKey, curve); // decompress the key
     if (uECC_valid_public_key(uncompressedPublicKey, curve) == 0) { return 0; }; // validate the uncompressed publicKey
 
+    /* Get SHA256 hash of (const unsigned char*)-casted message */
+    const auto unsignedMessage = reinterpret_cast<const unsigned char*>(this->message.c_str()); // cast message to unsigned char*
+    const auto hash = Sha256::getHash(unsignedMessage, this->message.length());
+
+#ifdef USE_IOT
+
+/* currently crashing */
+    // return uECC_verify(
+    //     uncompressedPublicKey, // const uint8_t *public_key,
+    //     hash.value, // const uint8_t *message_hash,
+    //     Sha256::BLOCK_LEN, // unsigned hash_size,
+    //     &this->signature[0], // const uint8_t *signature,
+    //     uECC_secp256k1() // uECC_Curve curve
+    // );
+    return false;
+
+#else
+
     /* Split uncompressed publicKey into (x,y) coordinate buffers */
     char xBuffer[65] =  "\0";
     char yBuffer[65] =  "\0";
@@ -65,12 +83,8 @@ bool Ark::Crypto::Utils::Message::verify()
     FieldInt y(yBuffer); // convert yBuffer to FieldInteger
     CurvePoint curvePoint(x, y); //
 
-    /* Get SHA256 hash of (const unsigned char*)-casted message */
-    const auto unsignedMessage = reinterpret_cast<const unsigned char*>(this->message.c_str()); // cast message to unsigned char*
-    const auto hash = Sha256::getHash(unsignedMessage, this->message.length());
-
     /* Create curvepoint of uncompressed publicKey(x,y) */
-    auto sig = ParseHex(HexStr(this->signature).c_str()); // get bytes of signature
+    auto sig = this->signature; // get bytes of signature
     std::vector<uint8_t> r; // create r-value buffer
     std::vector<uint8_t> s; // create s-value buffer
     decodeDER(sig, r, s); // decode signature from DER into r & s buffers
@@ -85,6 +99,8 @@ bool Ark::Crypto::Utils::Message::verify()
         r256,
         s256
     );
+
+#endif
 };
 /**/
 
@@ -95,13 +111,13 @@ bool Ark::Crypto::Utils::Message::verify()
  * ' messageArray[0].second: uint8_t* (ex: { 2, 159, 223 ... 253, 151, 180 })
     };) '
  *
- * @return std::vector< std::pair<const char*, const uint8_t*> >
+ * @return std::vector< std::pair<const char *const, std::string> >
  **/
-std::vector<std::pair<const char*, std::string>> Ark::Crypto::Utils::Message::toArray()
+std::vector<std::pair<const char *const, std::string>> Ark::Crypto::Utils::Message::toArray()
 {
     return {
         { "publickey", this->publicKey.c_str() },
-        { "signature", HexStr(
+        { "signature", BytesToHex(
                 &this->signature[0],
                 &this->signature[0]
                 + this->signature.size()

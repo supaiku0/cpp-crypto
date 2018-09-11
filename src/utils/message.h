@@ -11,12 +11,13 @@
 #define MESSAGE_H
 
 #include "helpers/helpers.h"
-#include "helpers/encoding.h"
+#include "helpers/encoding/hex.h"
 #include "helpers/crypto.h"
 
 #include "identities/publickey.h"
 #include "identities/privatekey.h"
 
+#include "bcl/CurvePoint.hpp"
 #include "bcl/Sha256Hash.hpp"
 #include "bcl/Sha256.hpp"
 #include "bcl/Uint256.hpp"
@@ -27,6 +28,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "uECC.h"
 
@@ -53,7 +55,7 @@ class Message
         void sign(std::string newMessage, const char *const passphrase);
         bool verify();
 
-        std::vector<std::pair<const char*, std::string>> toArray();
+        std::vector<std::pair<const char *const, std::string>> toArray();
         std::string toJson();
         std::string toString();
 };

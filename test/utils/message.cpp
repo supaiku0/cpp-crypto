@@ -1,3 +1,4 @@
+
 #include "gtest/gtest.h"
 #include "arkCrypto.h"
 #include <unordered_map>
@@ -8,7 +9,6 @@ namespace {
     const auto expectedSignature = "3044022021704f2adb2e4a10a3ddc1d7d64552b8061c05f6d12a168c69091c75581d611402200edf37689d2786fc690af9f0f6fa1f629c95695039f648a6d455484302402e93";
     const auto expectedPublicKey = "0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456";
     const auto expectedJsonString = "{\"publickey\":\"0275776018638e5c40f1b922901e96cac2caa734585ef302b4a2801ee9a338a456\",\"signature\":\"3044022021704f2adb2e4a10a3ddc1d7d64552b8061c05f6d12a168c69091c75581d611402200edf37689d2786fc690af9f0f6fa1f629c95695039f648a6d455484302402e93\",\"message\":\"Computer science is no more about computers than astronomy is about telescopes.\"}";
-
 }
 
 TEST(utils, message_sign)
@@ -17,7 +17,7 @@ TEST(utils, message_sign)
 
     message.sign(text, passphrase);
 
-    ASSERT_STREQ( expectedSignature, HexStr(message.signature).c_str() );
+    ASSERT_STREQ( expectedSignature, BytesToHex(message.signature).c_str() );
 }
 
 TEST(utils, message_to_array)
