@@ -6,6 +6,13 @@
 #include <string>
 #include <cstring>
 
+
+const auto ADDRESS_LENGTH = 34u;
+const auto COMPRESSED_PUBLICKEY_SIZE = 33u;
+const auto PRIVATEKEY_SIZE = 32u;
+const auto WIF_SIZE = 52u;
+
+
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
 #define USE_IOT

@@ -11,12 +11,14 @@
 #define CRYPTO_H
 
 #include "helpers/helpers.h"
-#include "helpers/encoding.h"
+#include "helpers/encoding/der.h"
 #include "identities/privatekey.h"
+#include "bcl/Ecdsa.hpp"
 #include "bcl/Sha256.hpp"
 #include "bcl/Sha256Hash.hpp"
 #include "bcl/Uint256.hpp"
 #include "rfc6979/rfc6979.h"
+#include <cassert>
 #include <vector>
 
 static inline void cryptoSign(Sha256Hash hash, Ark::Crypto::Identities::PrivateKey privateKey, std::vector<uint8_t>& signature)
@@ -36,7 +38,7 @@ static inline void cryptoSign(Sha256Hash hash, Ark::Crypto::Identities::PrivateK
     std::vector<uint8_t> s_der(PRIVATEKEY_SIZE);
     s.getBigEndianBytes(&s_der[0]);
 
-    toDER(convert_to_der_buffer(r_der), convert_to_der_buffer(s_der), signature);
+    encodeDER(toDER(r_der), toDER(s_der), signature);
 };
 
 #endif
