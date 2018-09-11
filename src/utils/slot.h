@@ -128,12 +128,7 @@ class Slot
                 memset(&t, 0, sizeof(t));
 
                 /* parse the humanString */
-                #ifdef __APPLE__
-                    strptime(humanString, "%Y-%m-%dT%j:%M:%S.%3d%z", &t);
-                    t.tm_hour -= 3;
-                #else /* (linux/windows) */
-                    strptime(humanString, "%Y-%m-%dT%H:%M:%S.%3d%z", &t);
-                #endif
+                strptime(humanString, "%Y-%m-%dT%H:%M:%S.%3d%z", &t);
 
                 /* get the local time-zone offset */
                 time_t offsetT = 0;
@@ -142,7 +137,7 @@ class Slot
                 localtime_r(&offsetT, &offsetR);
 
                 /* current time-zone - offset */
-                int ofs = t.tm_gmtoff - offsetR.tm_gmtoff;
+                int ofs = t.tm_gmtoff + offsetR.tm_gmtoff;
                 time_t r = mktime(&t);
 
                 /* return milliseconds (seconds x 1000) */
