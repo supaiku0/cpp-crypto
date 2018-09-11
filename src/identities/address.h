@@ -10,7 +10,8 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
-#include "helpers/encoding.h"
+#include "helpers/helpers.h"
+#include "helpers/encoding/hex.h"
 #include "identities/publickey.h"
 #include "identities/privatekey.h"
 
@@ -25,10 +26,10 @@ namespace Identities {
  **/
 class Address
 {
-        protected:
-            uint8_t bytes_[ADDRESS_LENGTH];
+    protected:
+        uint8_t bytes_[ADDRESS_LENGTH];
 
-        public:
+    public:
         Address() : bytes_() {};
         Address(const char *const newAddressStr);
         Address(const uint8_t *newAddressBytes);
@@ -44,7 +45,7 @@ class Address
         static bool validate(const char *const address, uint8_t networkVersion);
         static bool validate(const uint8_t *address, uint8_t networkVersion);
 };
-
+/**/
 };
 };
 };

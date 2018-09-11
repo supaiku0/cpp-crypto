@@ -10,7 +10,8 @@
 #ifndef PUBLICKEY_H
 #define PUBLICKEY_H
 
-#include "helpers/encoding.h"
+#include "helpers/helpers.h"
+#include "helpers/encoding/hex.h"
 #include "identities/privatekey.h"
 #include "uECC.h"
 
@@ -24,11 +25,11 @@ namespace Identities {
  **/
 class PublicKey
 {
-	protected:
-		uint8_t bytes_[COMPRESSED_PUBLICKEY_SIZE];
+    protected:
+        uint8_t bytes_[COMPRESSED_PUBLICKEY_SIZE];
 
     public:
-    	PublicKey() : bytes_() {};
+        PublicKey() : bytes_() {};
         PublicKey(const char *const newPublicKeyStr);
         PublicKey(const uint8_t *newPublicKeyBytes);
 
@@ -40,7 +41,7 @@ class PublicKey
         static PublicKey fromPassphrase(const char *const passphrase);
         static PublicKey fromPrivateKey(PrivateKey privateKey);
         static PublicKey fromHex(const char *const publicKey);
- 
+
         static bool validate(PublicKey publicKey);
         static bool validate(const char *publicKeyStr);
         static bool validate(const uint8_t *publicKeyBytes);

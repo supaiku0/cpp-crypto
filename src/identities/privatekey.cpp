@@ -13,18 +13,18 @@
  * 
  **/
 Ark::Crypto::Identities::PrivateKey::PrivateKey(const char *const newPrivateKeyStr)
-{ 
-    memmove(this->bytes_, &ParseHex(newPrivateKeyStr).data()[0], PRIVATEKEY_SIZE);    
-};
+{
+    memmove(this->bytes_, &HexToBytes(newPrivateKeyStr).data()[0], PRIVATEKEY_SIZE);    
+}
 /**/
 
 /**
  * 
  **/
 Ark::Crypto::Identities::PrivateKey::PrivateKey(const uint8_t *newPrivateKeyBytes)
-{ 
+{
     memmove(this->bytes_, newPrivateKeyBytes, PRIVATEKEY_SIZE);
-};
+}
 /**/
 
 /**
@@ -39,7 +39,7 @@ const uint8_t *Ark::Crypto::Identities::PrivateKey::toBytes() { return this->byt
 const char* Ark::Crypto::Identities::PrivateKey::c_str() const
 {
     return BytesToHex(this->bytes_, this->bytes_ + PRIVATEKEY_SIZE).c_str();
-};
+}
 /**/
 
 /**
@@ -55,7 +55,7 @@ Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromPas
     auto hash = Sha256::getHash(reinterpret_cast<const unsigned char*>(passphrase), strlen(passphrase));
     memcpy(&privateKey[0], hash.value, privateKey.size());
     return { BytesToHex(&privateKey[0], &privateKey[0] + PRIVATEKEY_SIZE).c_str() };
-};
+}
 /**/
 
 /**
@@ -65,7 +65,7 @@ Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromPas
  *
  * @return PrivateKey
  **/
-Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromHex(const char *const privateKey) { return { privateKey }; };
+Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromHex(const char *const privateKey) { return { privateKey }; }
 /**/
 
 /**
@@ -85,7 +85,7 @@ Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromWIF
     std::vector<uint8_t> privateKey(PRIVATEKEY_SIZE);
     bigNum.getBigEndianBytes(&privateKey[0]);
     return { BytesToHex(&privateKey[0], &privateKey[0] + PRIVATEKEY_SIZE).c_str() };
-};
+}
 /**/
 
 /**
@@ -108,7 +108,7 @@ bool Ark::Crypto::Identities::PrivateKey::validate(PrivateKey privateKey) { retu
 bool Ark::Crypto::Identities::PrivateKey::validate(const char *privateKeyStr)
 {
     return ((strlen(privateKeyStr)/2) == PRIVATEKEY_SIZE); // check length
-};
+}
 /**/
 
 /**
@@ -121,5 +121,5 @@ bool Ark::Crypto::Identities::PrivateKey::validate(const char *privateKeyStr)
 bool Ark::Crypto::Identities::PrivateKey::validate(const uint8_t *privateKeyBytes)
 {
     return validate(PrivateKey(privateKeyBytes));
-};
+}
 /**/

@@ -10,7 +10,7 @@
 #ifndef WIF_H
 #define WIF_H
 
-#include "helpers/encoding.h"
+#include "helpers/encoding/hex.h"
 #include "identities/privatekey.h"
 #include <cstring>
 
@@ -25,18 +25,18 @@ namespace Identities {
  **/
 class WIF
 {
-	protected:
-		uint8_t bytes_[WIF_SIZE];
+    protected:
+        uint8_t bytes_[WIF_SIZE];
 
     public:
-      WIF() : bytes_() {};
-      WIF(const char *const newWIFStr);
-      WIF(const uint8_t *newWIFBytes);
+        WIF() : bytes_() {};
+        WIF(const char *const newWIFStr);
+        WIF(const uint8_t *newWIFBytes);
 
-      const uint8_t *toBytes();
-      const char* c_str() const;
+        const uint8_t *toBytes();
+        const char* c_str() const;
 
-      static WIF fromPassphrase(const char *const passphrase, uint8_t wifByte);
+        static WIF fromPassphrase(const char *const passphrase, uint8_t wifByte);
 };
 /**/
 };

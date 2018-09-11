@@ -18,14 +18,14 @@ Ark::Crypto::Identities::WIF::WIF(const char *const newWIFStr)
                 reinterpret_cast<const unsigned char*>(newWIFStr),
                 WIF_SIZE))
         : void(this->bytes_[WIF_SIZE - 1] = { '\0' });   
-};
+}
 /**/
 
 /**/
 Ark::Crypto::Identities::WIF::WIF(const uint8_t *newWIFBytes)
 {
     std::memmove(this->bytes_, newWIFBytes, WIF_SIZE);
-};
+}
 /**/
 
 /**/
@@ -39,7 +39,7 @@ const char* Ark::Crypto::Identities::WIF::c_str() const
         this->bytes_,
         this->bytes_ + WIF_SIZE
     ).c_str();
-};
+}
 /**/
 
 /**
@@ -63,5 +63,5 @@ Ark::Crypto::Identities::WIF Ark::Crypto::Identities::WIF::fromPassphrase(
         &wifStr[0]
     );
     return { wifStr.c_str() };
-};
+}
 /**/

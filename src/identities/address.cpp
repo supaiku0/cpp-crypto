@@ -19,13 +19,13 @@ Ark::Crypto::Identities::Address::Address(const char *const newAddressStr)
     (strlen(newAddressStr) == ADDRESS_LENGTH)
         ? void(memmove(this->bytes_, reinterpret_cast<const unsigned char*>(newAddressStr), ADDRESS_LENGTH))
         : void(this->bytes_[COMPRESSED_PUBLICKEY_SIZE] = { '\0' });    
-};
+}
 /**/
 
 Ark::Crypto::Identities::Address::Address(const uint8_t *newAddressBytes)
 { 
     memmove(this->bytes_, newAddressBytes, ADDRESS_LENGTH);   
-};
+}
 /**/
 
 /** 
@@ -36,7 +36,7 @@ Ark::Crypto::Identities::Address::Address(const uint8_t *newAddressBytes)
 const uint8_t *Ark::Crypto::Identities::Address::toBytes()
 {
     return this->bytes_;
-};
+}
 /**/
 
 /**
@@ -48,7 +48,7 @@ const char* Ark::Crypto::Identities::Address::c_str() const
         this->bytes_,
         this->bytes_ + ADDRESS_LENGTH
     ).c_str();
-};
+}
 /**/
 
 /**
@@ -65,7 +65,7 @@ Ark::Crypto::Identities::Address Ark::Crypto::Identities::Address::fromPassphras
 ) {
     PublicKey publicKey = PublicKey::fromPassphrase(passphrase);
     return fromPublicKey(publicKey, networkVersion);
-};
+}
 /**/
 
 /**
@@ -82,7 +82,7 @@ Ark::Crypto::Identities::Address Ark::Crypto::Identities::Address::fromPrivateKe
 ) {
     PublicKey publicKey = PublicKey::fromPrivateKey(privateKey);
     return fromPublicKey(publicKey, networkVersion);
-};
+}
 /**/
 
 /**
@@ -102,7 +102,7 @@ Ark::Crypto::Identities::Address Ark::Crypto::Identities::Address::fromPublicKey
     std::string s(35, '\0');
     Base58Check::pubkeyHashToBase58Check(&seed[0], networkVersion, &s[0]);    
     return { s.c_str() };
-};
+}
 /**/
 
 /** 
@@ -121,7 +121,7 @@ bool Ark::Crypto::Identities::Address::validate(
     uint8_t version = 0;
     Base58Check::pubkeyHashFromBase58Check(address.c_str(), pub_key_hash, &version);
     return version == networkVersion;
-};
+}
 /**/
 
 /**
@@ -137,7 +137,7 @@ bool Ark::Crypto::Identities::Address::validate(
         uint8_t networkVersion
 ) {
     return validate(Address(addressStr), networkVersion);
-};
+}
 /**/
 
 /**
@@ -153,5 +153,5 @@ bool Ark::Crypto::Identities::Address::validate(
         uint8_t networkVersion
 ) {
     return validate(Address(addressBytes), networkVersion);
-};
+}
 /**/

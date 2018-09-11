@@ -14,8 +14,8 @@
  **/
 Ark::Crypto::Identities::PublicKey::PublicKey(const char *const newPublicKeyStr)
 { 
-    memmove(this->bytes_, &ParseHex(newPublicKeyStr).data()[0], COMPRESSED_PUBLICKEY_SIZE);
-};
+    memmove(this->bytes_, &HexToBytes(newPublicKeyStr).data()[0], COMPRESSED_PUBLICKEY_SIZE);
+}
 /**/
 
 /**
@@ -24,19 +24,19 @@ Ark::Crypto::Identities::PublicKey::PublicKey(const char *const newPublicKeyStr)
 Ark::Crypto::Identities::PublicKey::PublicKey(const uint8_t *newPublicKeyBytes)
 { 
     memmove(this->bytes_, newPublicKeyBytes, COMPRESSED_PUBLICKEY_SIZE);
-};
+}
 /**/
 
 /**
  * 
  **/
-const uint8_t *Ark::Crypto::Identities::PublicKey::toBytes() { return this->bytes_; };
+const uint8_t *Ark::Crypto::Identities::PublicKey::toBytes() { return this->bytes_; }
 /**/
 
 /**
  * 
  **/
-bool Ark::Crypto::Identities::PublicKey::isValid() { return PublicKey::validate(*this); };
+bool Ark::Crypto::Identities::PublicKey::isValid() { return PublicKey::validate(*this); }
 /**/
 
 /**
@@ -45,7 +45,7 @@ bool Ark::Crypto::Identities::PublicKey::isValid() { return PublicKey::validate(
 const char* Ark::Crypto::Identities::PublicKey::c_str() const
 {
     return BytesToHex(this->bytes_, this->bytes_ + COMPRESSED_PUBLICKEY_SIZE).c_str();
-};
+}
 /**/
 
 /**
@@ -59,7 +59,7 @@ Ark::Crypto::Identities::PublicKey Ark::Crypto::Identities::PublicKey::fromPassp
 {
     PrivateKey privateKey = PrivateKey::fromPassphrase(passphrase);
     return PublicKey::fromPrivateKey(privateKey);
-};
+}
 /**/
 
 /**
@@ -78,7 +78,7 @@ Ark::Crypto::Identities::PublicKey Ark::Crypto::Identities::PublicKey::fromPriva
     assert(publicKey.size() == COMPRESSED_PUBLICKEY_SIZE);
     uECC_compress(pub, &publicKey[0], curve);
     return { BytesToHex(&publicKey[0], &publicKey[0] + COMPRESSED_PUBLICKEY_SIZE).c_str() };
-};
+}
 /**/
 
 /**
@@ -105,7 +105,7 @@ bool Ark::Crypto::Identities::PublicKey::validate(PublicKey publicKey)
     const struct uECC_Curve_t * curve = uECC_secp256k1(); // define the curve-type
     uECC_decompress(publicKeyBytes, uncompressedPublicKey, curve); // decompress the key
     return uECC_valid_public_key(uncompressedPublicKey, curve); // validate the uncompressed publicKey
-};
+}
 /**/
 
 /**
@@ -118,7 +118,7 @@ bool Ark::Crypto::Identities::PublicKey::validate(PublicKey publicKey)
 bool Ark::Crypto::Identities::PublicKey::validate(const char *publicKeyStr)
 {
     return validate(PublicKey(publicKeyStr));
-};
+}
 /**/
 
 /**
@@ -131,5 +131,5 @@ bool Ark::Crypto::Identities::PublicKey::validate(const char *publicKeyStr)
 bool Ark::Crypto::Identities::PublicKey::validate(const uint8_t *publicKeyBytes)
 {
     return validate(PublicKey(publicKeyBytes));
-};
+}
 /**/

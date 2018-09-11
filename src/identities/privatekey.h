@@ -10,7 +10,8 @@
 #ifndef PRIVATEKEY_H
 #define PRIVATEKEY_H
 
-#include "helpers/encoding.h"
+#include "helpers/helpers.h"
+#include "helpers/encoding/hex.h"
 #include "bcl/Base58Check.hpp"
 #include "bcl/Sha256Hash.hpp"
 #include "bcl/Sha256.hpp"
@@ -27,11 +28,11 @@ namespace Identities {
  **/
 class PrivateKey
 {
-	protected:
-		uint8_t bytes_[PRIVATEKEY_SIZE];
+    protected:
+        uint8_t bytes_[PRIVATEKEY_SIZE];
 
     public:
-    	PrivateKey() : bytes_() {};
+        PrivateKey() : bytes_() {};
         PrivateKey(const char *const newPrivateKeyStr);
         PrivateKey(const uint8_t *newPrivateKeyBytes);
 
