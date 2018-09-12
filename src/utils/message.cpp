@@ -45,62 +45,10 @@ void Ark::Crypto::Utils::Message::sign(
  **/
 bool Ark::Crypto::Utils::Message::verify()
 {
-    /* Get the Uncompressed PublicKey */
-    auto publicKeyBytes = this->publicKey.toBytes(); // compressed publicKey bytes (uint8_t*)
-    uint8_t uncompressedPublicKey[64] = {}; // create uncompressed publicKey buffer (uint8_t[64])
-    const struct uECC_Curve_t * curve = uECC_secp256k1(); // define the curve-type
-    uECC_decompress(publicKeyBytes, uncompressedPublicKey, curve); // decompress the key
-    if (uECC_valid_public_key(uncompressedPublicKey, curve) == 0) { return 0; }; // validate the uncompressed publicKey
-
-    /* Get SHA256 hash of (const unsigned char*)-casted message */
     const auto unsignedMessage = reinterpret_cast<const unsigned char*>(this->message.c_str()); // cast message to unsigned char*
     const auto hash = Sha256::getHash(unsignedMessage, this->message.length());
 
-#ifdef USE_IOT
-
-/* currently crashing */
-    // return uECC_verify(
-    //     uncompressedPublicKey, // const uint8_t *public_key,
-    //     hash.value, // const uint8_t *message_hash,
-    //     Sha256::BLOCK_LEN, // unsigned hash_size,
-    //     &this->signature[0], // const uint8_t *signature,
-    //     uECC_secp256k1() // uECC_Curve curve
-    // );
-    return false;
-
-#else
-
-    /* Split uncompressed publicKey into (x,y) coordinate buffers */
-    char xBuffer[65] =  "\0";
-    char yBuffer[65] =  "\0";
-    for (int i = 0; i < 32; i++)  {
-        snprintf(&xBuffer[i*2], 64, "%02x", uncompressedPublicKey[i]);
-        snprintf(&yBuffer[i*2], 64, "%02x", uncompressedPublicKey[i + 32]);
-    };
-
-    /* Create curvepoint of uncompressed publicKey(x,y) */
-    FieldInt x(xBuffer); // convert xBuffer to FieldInteger
-    FieldInt y(yBuffer); // convert yBuffer to FieldInteger
-    CurvePoint curvePoint(x, y); //
-
-    /* Create curvepoint of uncompressed publicKey(x,y) */
-    auto sig = this->signature; // get bytes of signature
-    std::vector<uint8_t> r; // create r-value buffer
-    std::vector<uint8_t> s; // create s-value buffer
-    decodeDER(sig, r, s); // decode signature from DER into r & s buffers
-
-    Uint256 r256(r.data()); // create Uint256/BigNumber from r-value buffer
-    Uint256 s256(s.data()); // create Uint256/BigNumber from s-value buffer
-
-    /* Verify */
-    return Ecdsa::verify(
-        curvePoint,
-        hash,
-        r256,
-        s256
-    );
-
-#endif
+    return cryptoVerify(this->publicKey, hash, this->signature);
 };
 /**/
 
