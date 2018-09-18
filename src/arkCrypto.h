@@ -31,6 +31,8 @@
 #include "networks/mainnet.h"
 #include "networks/testnet.h"
 
+#include "transactions/transaction.h"
+
 #include "utils/message.h"
 #include "utils/slot.h"
 
@@ -38,5 +40,6 @@ using namespace Ark::Crypto::Configuration;
 using namespace Ark::Crypto::Enums;
 using namespace Ark::Crypto::Identities;
 using namespace Ark::Crypto::Networks;
+using namespace Ark::Crypto::Transactions;
 
 #endif

@@ -30,7 +30,8 @@ set (TEST_SRC
 	${PROJECT_SOURCE_DIR}/networks/devnet.cpp
 	${PROJECT_SOURCE_DIR}/networks/mainnet.cpp
 	${PROJECT_SOURCE_DIR}/networks/testnet.cpp
-	${PROJECT_SOURCE_DIR}/utils/message.cpp
+        ${PROJECT_SOURCE_DIR}/transactions/transaction.cpp
+        ${PROJECT_SOURCE_DIR}/utils/message.cpp
 	${PROJECT_SOURCE_DIR}/utils/slot.cpp
 )
 
