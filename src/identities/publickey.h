@@ -14,6 +14,7 @@
 #include "helpers/encoding/hex.h"
 #include "identities/privatekey.h"
 #include "uECC.h"
+#include <string>
 
 namespace Ark {
 namespace Crypto {
@@ -34,9 +35,9 @@ class PublicKey
         PublicKey(const uint8_t *newPublicKeyBytes);
 
         const uint8_t *toBytes();
-        
+
         bool isValid();
-        const char* c_str() const;
+        std::string toString() const;
 
         static PublicKey fromPassphrase(const char *const passphrase);
         static PublicKey fromPrivateKey(PrivateKey privateKey);

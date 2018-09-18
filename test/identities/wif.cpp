@@ -15,19 +15,19 @@ namespace {
 TEST(identities, wif_from_bytes)
 {
     WIF wif(testWIFBytes);
-    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.c_str());
+    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.toString().c_str());
 }
 
 TEST(identities, wif_from_passphrase)
 {
     WIF wif = WIF::fromPassphrase(passphrase, wifByte);
-    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.c_str());
+    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.toString().c_str());
 }
 
 TEST(identities, wif_from_string)
 {
     WIF wif("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB");
-    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.c_str());
+    ASSERT_STREQ("SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB", wif.toString().c_str());
 }
 
 TEST(identities, wif_get_bytes)

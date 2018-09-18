@@ -36,9 +36,9 @@ const uint8_t *Ark::Crypto::Identities::PrivateKey::toBytes() { return this->byt
 /**
  * 
  **/
-const char* Ark::Crypto::Identities::PrivateKey::c_str() const
+std::string Ark::Crypto::Identities::PrivateKey::toString() const
 {
-    return BytesToHex(this->bytes_, this->bytes_ + PRIVATEKEY_SIZE).c_str();
+    return BytesToHex(this->bytes_, this->bytes_ + PRIVATEKEY_SIZE);
 }
 /**/
 
@@ -95,7 +95,7 @@ Ark::Crypto::Identities::PrivateKey Ark::Crypto::Identities::PrivateKey::fromWIF
  *
  * @return bool
  **/
-bool Ark::Crypto::Identities::PrivateKey::validate(PrivateKey privateKey) { return PrivateKey::validate(privateKey.c_str()); };
+bool Ark::Crypto::Identities::PrivateKey::validate(PrivateKey privateKey) { return PrivateKey::validate(privateKey.toString().c_str()); };
 /**/
 
 /**

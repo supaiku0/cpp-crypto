@@ -15,38 +15,38 @@ namespace {
 TEST(identities, privatekey_construct_bytes)
 {
     PrivateKey privateKey(testPrivateKeyBytes);
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_construct_string)
 {
     PrivateKey privateKey("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_from_hex)
 {
     PrivateKey privateKey = PrivateKey::fromHex("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_from_passphrase)
 {
     PrivateKey privateKey = PrivateKey::fromPassphrase(passphrase);
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_from_string)
 {
     PrivateKey privateKey("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021");
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_from_wif_string)
 {
     const char* wifStr = "SEZuJZouNK8GLXNApjciH4QnSKiNr971exVcL2Y6XfrDF5o977zB";
     PrivateKey privateKey = PrivateKey::fromWIFString(wifStr, wifByte);
-    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.c_str());
+    ASSERT_STREQ("950981ce17df662dbc1d25305f8597a71309fb8f7232203a0944477e2534b021", privateKey.toString().c_str());
 }
 
 TEST(identities, privatekey_get_bytes)

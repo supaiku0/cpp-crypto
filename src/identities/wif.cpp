@@ -33,12 +33,9 @@ const uint8_t* Ark::Crypto::Identities::WIF::toBytes() { return this->bytes_; };
 /**/
 
 /**/
-const char* Ark::Crypto::Identities::WIF::c_str() const
+std::string Ark::Crypto::Identities::WIF::toString() const
 {
-    return std::string(
-        this->bytes_,
-        this->bytes_ + WIF_SIZE
-    ).c_str();
+    return std::string(this->bytes_, this->bytes_ + WIF_SIZE);
 }
 /**/
 
@@ -57,7 +54,7 @@ Ark::Crypto::Identities::WIF Ark::Crypto::Identities::WIF::fromPassphrase(
     PrivateKey privateKey = PrivateKey::fromPassphrase(passphrase);
     std::string wifStr(53, '\0');
     Base58Check::privateKeyToBase58Check(
-        Uint256(privateKey.c_str()),
+        Uint256(privateKey.toString().c_str()),
         wifByte,
         true,
         &wifStr[0]

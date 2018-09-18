@@ -16,6 +16,7 @@
 #include "bcl/Sha256Hash.hpp"
 #include "bcl/Sha256.hpp"
 #include <cassert>
+#include <string>
 
 namespace Ark {
 namespace Crypto {
@@ -37,8 +38,7 @@ class PrivateKey
         PrivateKey(const uint8_t *newPrivateKeyBytes);
 
         const uint8_t *toBytes();
-        
-        const char* c_str() const;
+        std::string toString() const;
 
         static PrivateKey fromPassphrase(const char* const passphrase);
         static PrivateKey fromHex(const char *const privateKey);

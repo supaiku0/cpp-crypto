@@ -64,7 +64,7 @@ bool Ark::Crypto::Utils::Message::verify()
 std::vector<std::pair<const char *const, std::string>> Ark::Crypto::Utils::Message::toArray()
 {
     return {
-        { "publickey", this->publicKey.c_str() },
+        { "publickey", this->publicKey.toString().c_str() },
         { "signature", BytesToHex(
                 &this->signature[0],
                 &this->signature[0]

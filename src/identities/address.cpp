@@ -40,14 +40,11 @@ const uint8_t *Ark::Crypto::Identities::Address::toBytes()
 /**/
 
 /**
- * @brief: returns cstring representation of stored bytes
+ * @brief: returns std::string representation of stored bytes
  **/
-const char* Ark::Crypto::Identities::Address::c_str() const
+std::string Ark::Crypto::Identities::Address::toString() const
 {
-    return std::string(
-        this->bytes_,
-        this->bytes_ + ADDRESS_LENGTH
-    ).c_str();
+    return std::string(this->bytes_, this->bytes_ + ADDRESS_LENGTH);
 }
 /**/
 
@@ -119,7 +116,7 @@ bool Ark::Crypto::Identities::Address::validate(
 ) {
     std::uint8_t pub_key_hash[Ripemd160::HASH_LEN] = {};
     uint8_t version = 0;
-    Base58Check::pubkeyHashFromBase58Check(address.c_str(), pub_key_hash, &version);
+    Base58Check::pubkeyHashFromBase58Check(address.toString().c_str(), pub_key_hash, &version);
     return version == networkVersion;
 }
 /**/

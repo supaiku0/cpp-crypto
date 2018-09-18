@@ -14,6 +14,7 @@
 #include "helpers/encoding/hex.h"
 #include "identities/publickey.h"
 #include "identities/privatekey.h"
+#include <string>
 
 namespace Ark {
 namespace Crypto {
@@ -35,7 +36,7 @@ class Address
         Address(const uint8_t *newAddressBytes);
 
         const uint8_t *toBytes();
-        const char* c_str() const;
+        std::string toString() const;
 
         static Address fromPassphrase(const char *const passphrase, uint8_t networkVersion);
         static Address fromPrivateKey(PrivateKey privateKey, uint8_t networkVersion);

@@ -34,7 +34,7 @@ class WIF
         WIF(const uint8_t *newWIFBytes);
 
         const uint8_t *toBytes();
-        const char* c_str() const;
+        std::string toString() const;
 
         static WIF fromPassphrase(const char *const passphrase, uint8_t wifByte);
 };
