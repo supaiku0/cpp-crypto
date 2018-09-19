@@ -24,11 +24,6 @@ Transaction Deserializer::deserialize()
 {
     Transaction transaction;
 
-    for (std::vector<uint8_t>::const_iterator i = this->_binary.begin(); i != this->_binary.end(); ++i)
-        std::cout << (unsigned)*i << ' ';
-
-    std::cout << std::endl;
-
     deserializeHeader(transaction);
     deserializeType(transaction);
     deserializeSignatures(transaction);
@@ -37,7 +32,6 @@ Transaction Deserializer::deserialize()
         handleVersionOne(transaction);
     }
 
-    std::cout << "AssetOffset: " << (unsigned) _assetOffset << std::endl;
     return transaction;
 }
 
