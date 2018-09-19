@@ -84,6 +84,7 @@ void Deserializer::deserializeType(Transaction& transaction)
         break;
     }
     case  Enums::Types::MULTI_SIGNATURE_REGISTRATION: {
+        deserializeMultiSignatureRegistration(transaction);
         break;
     }
     case  Enums::Types::IPFS: {
@@ -154,6 +155,31 @@ void Deserializer::deserializeVote(Transaction& transaction)
     }
 
     _assetOffset += 2 + voteLength * 34 * 2;
+}
+
+void Deserializer::deserializeMultiSignatureRegistration(Transaction& transaction)
+{
+    uint8_t min = 0;
+    unpack(&min, &this->_binary[_assetOffset / 2]);
+    min &= 0xff;
+
+    uint8_t count = 0;
+    unpack(&count, &this->_binary[_assetOffset / 2 + 1]);
+    count &= 0xff;
+
+    uint8_t lifetime = 0;
+    unpack(&lifetime, &this->_binary[_assetOffset / 2 + 1]);
+    lifetime &= 0xff;
+
+    transaction.asset.multiSignature.min = min;
+    transaction.asset.multiSignature.lifetime = lifetime;
+
+    for (uint8_t i = 0; i < count; i++) {
+        std::string key = this->_serialized.substr(_assetOffset + 6 + i * 66, 66);
+        transaction.asset.multiSignature.keysgroup.push_back(key);
+    }
+
+    _assetOffset += 6 + count * 66;
 }
 
 void Deserializer::deserializeSignatures(Transaction& transaction)

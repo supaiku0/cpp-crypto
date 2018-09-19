@@ -33,6 +33,7 @@ private:
     void deserializeSecondSignatureRegistration(Transaction& transaction);
     void deserializeDelegateRegistration(Transaction& transaction);
     void deserializeVote(Transaction& transaction);
+    void deserializeMultiSignatureRegistration(Transaction& transaction);
     void deserializeSignatures(Transaction& transaction);
     void handleVersionOne(Transaction& transaction);
 
