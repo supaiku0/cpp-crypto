@@ -18,6 +18,7 @@ TEST(transactions, deserialize_transfer)
     ASSERT_EQ(actual.vendorField, "Hello World");
     ASSERT_EQ(actual.amount, 200000000);
     ASSERT_EQ(actual.expiration, 0);
+    ASSERT_EQ(actual.id, "ecf558fbddd62ae42edcfcba02f402d987a94b72a7636ef1121e8625487e2a1e");
     ASSERT_EQ(actual.recipientId, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
     ASSERT_EQ(actual.signature, "304402205616d6e361439d67a5c2067bbfc8fce61b93061a4fa113315a1c5cf965ff6f3202200a1d99caaa98aeebcec04edd5365352500addb830c79f49b9de484ec616bb1e1");
 }
@@ -38,6 +39,7 @@ TEST(transactions, deserialize_second_signature_registration)
     ASSERT_EQ(actual.fee, 500000000);
     ASSERT_EQ(actual.amount, 0);
     ASSERT_EQ(actual.expiration, 0);
+    ASSERT_EQ(actual.id, "6d1615924d172d352c8f44d4ded84cbbece3c03ebb3e4fc3f3334784ae332590");
     ASSERT_EQ(actual.asset.signature.publicKey, "03699e966b2525f9088a6941d8d94f7869964a000efe65783d78ac82e1199fe609");
     ASSERT_EQ(actual.signature, "304402202aab49477dd3531e4473196d08fbd7c00ebb79223d5eaaeaf02c52c4041a86cf02201a7d82655f9b1d22af3ea94e6f183649bb4610cdeca3b9e20d6c8773f869831c");
 
@@ -62,6 +64,7 @@ TEST(transactions, deserialize_delegate_registration)
     ASSERT_EQ(actual.fee, 2500000000);
     ASSERT_EQ(actual.amount, 0);
     ASSERT_EQ(actual.expiration, 0);
+    ASSERT_EQ(actual.id, "bf7e018ff9c0066f7a9f51e95d3f78c08cad5dd8581325d630d64350181a91bb");
     ASSERT_EQ(actual.asset.delegate.username, "boldninja");
 
     ASSERT_EQ(actual.signature, "3045022100f21b742fa052cd18de43328e1d068539ba7cbe9d33a9dcbd862a82871383955d0220053b06d22ed3e3ad6168c6b27aa0ec68e7e40958c7709aec0e1555087ea9ad94");
@@ -84,7 +87,7 @@ TEST(transactions, deserialize_vote)
     ASSERT_EQ(actual.fee, 100000000);
     ASSERT_EQ(actual.amount, 0);
     ASSERT_EQ(actual.expiration, 0);
-   // ASSERT_EQ(actual.id, "16f28a180cd6f3ea46c10f358a457989e956e9d355258230d0c7b07acec10b73");
+    ASSERT_EQ(actual.id, "16f28a180cd6f3ea46c10f358a457989e956e9d355258230d0c7b07acec10b73");
     ASSERT_EQ(actual.recipientId, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
 
     std::vector<std::string> votes = {"+022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d"};
@@ -110,7 +113,6 @@ TEST(transactions, deserialize_multi_signature_registration)
     ASSERT_EQ(actual.fee, 2000000000);
     ASSERT_EQ(actual.amount, 0);
     ASSERT_EQ(actual.expiration, 0);
-   // ASSERT_EQ(actual.id, "cbd6862966bb1b03ba742397b7e5a88d6eefb393a362ead0d605723b840db2af");
 
     std::vector<std::string> keysgroup = {
         "+03543c6cc3545be6bac09c82721973a052c690658283472e88f24d14739f75acc8",
@@ -118,6 +120,10 @@ TEST(transactions, deserialize_multi_signature_registration)
         "+02e8d5d17eb17bbc8d7bf1001d29a2d25d1249b7bb7a5b7ad8b7422063091f4b31"
     };
     ASSERT_EQ(actual.asset.multiSignature.keysgroup, keysgroup);
+    ASSERT_EQ(actual.asset.multiSignature.min, 2);
+    ASSERT_EQ(actual.asset.multiSignature.lifetime, 24);
+
+    ASSERT_EQ(actual.id, "cbd6862966bb1b03ba742397b7e5a88d6eefb393a362ead0d605723b840db2af");
 
     ASSERT_EQ(actual.signature, "30440220324d89c5792e4a54ae70b4f1e27e2f87a8b7169cc6f2f7b2c83dba894960f987022053b8d0ae23ff9d1769364db7b6fd03216d93753c82a711c3558045e787bc01a5");
     ASSERT_EQ(actual.secondSignature, "304402201fcd54a9ac9c0269b8cec213566ddf43207798e2cf9ca1ce3c5d315d66321c6902201aa94c4ed3e5e479a12220aa886b259e488eb89b697c711f91e8c03b9620e0b1");

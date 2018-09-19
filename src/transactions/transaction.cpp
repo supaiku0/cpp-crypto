@@ -3,6 +3,7 @@
 #include "helpers/crypto.h"
 #include "helpers/helpers.h"
 #include "identities/privatekey.h"
+#include "identities/address.h"
 #include "enums/types.h"
 
 #include <iostream>
@@ -16,7 +17,7 @@ Ark::Crypto::Transactions::Transaction::Transaction()
 
 std::string Ark::Crypto::Transactions::Transaction::getId() const
 {
-    auto bytes = this->toBytes();
+    auto bytes = this->toBytes(false, false);
     const auto shaHash = Sha256::getHash(&bytes[0], bytes.size());
     memcpy(&bytes[0], shaHash.value, shaHash.HASH_LEN);
     return BytesToHex(&bytes[0], &bytes[0] + shaHash.HASH_LEN);
@@ -59,7 +60,8 @@ std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSi
     bytes.insert(std::end(bytes), std::begin(senderKeyBytes), std::end(senderKeyBytes));
 
     if (!this->recipientId.empty()) {
-        // TODO:
+        std::vector<std::uint8_t> recipientIdBytes = Address::bytesFromBase58Check(this->recipientId.c_str());
+        bytes.insert(std::end(bytes), std::begin(recipientIdBytes), std::end(recipientIdBytes));
     } else {
         std::vector<uint8_t> filler(21, 0);
         bytes.insert(std::end(bytes), std::begin(filler), std::end(filler));

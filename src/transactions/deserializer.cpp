@@ -67,58 +67,46 @@ void Deserializer::deserializeHeader(Transaction& transaction)
 void Deserializer::deserializeType(Transaction& transaction)
 {
     switch (transaction.type) {
-    case  Enums::Types::TRANSFER: {
+    case Enums::Types::TRANSFER: {
         deserializeTransfer(transaction);
         break;
     }
-    case  Enums::Types::SECOND_SIGNATURE_REGISTRATION: {
+    case Enums::Types::SECOND_SIGNATURE_REGISTRATION: {
         deserializeSecondSignatureRegistration(transaction);
         break;
     }
-    case  Enums::Types::DELEGATE_REGISTRATION: {
+    case Enums::Types::DELEGATE_REGISTRATION: {
         deserializeDelegateRegistration(transaction);
         break;
     }
-    case  Enums::Types::VOTE: {
+    case Enums::Types::VOTE: {
         deserializeVote(transaction);
         break;
     }
-    case  Enums::Types::MULTI_SIGNATURE_REGISTRATION: {
+    case Enums::Types::MULTI_SIGNATURE_REGISTRATION: {
         deserializeMultiSignatureRegistration(transaction);
         break;
     }
-    case  Enums::Types::IPFS: {
+    case Enums::Types::IPFS: {
         break;
     }
-    case  Enums::Types::TIMELOCK_TRANSFER: {
+    case Enums::Types::TIMELOCK_TRANSFER: {
         break;
     }
-    case  Enums::Types::MULTI_PAYMENT: {
+    case Enums::Types::MULTI_PAYMENT: {
         break;
     }
-    case  Enums::Types::DELEGATE_RESIGNATION: {
+    case Enums::Types::DELEGATE_RESIGNATION: {
         break;
     }
     }
-}
-
-static std::string base58encodeAddress(uint8_t* source) {
-    // Magic numbers from Base58Check::pubkeyHashToBase58Check
-    uint8_t temp[21 + 4];
-    char out[21 + 4];
-
-    std::vector<uint8_t> buf;
-    std::copy(source, source + 21, std::back_inserter(buf));
-    Base58Check::bytesToBase58Check(&buf[0], temp, 21, out);
-
-    return std::string(out);
 }
 
 void Deserializer::deserializeTransfer(Transaction& transaction)
 {
     unpack(&transaction.amount, &this->_binary[_assetOffset / 2]);
     unpack(&transaction.expiration, &this->_binary[_assetOffset / 2 + 8]);
-    transaction.recipientId = base58encodeAddress(&this->_binary[(_assetOffset / 2) + 12]);
+    transaction.recipientId = Identities::Address::base58encode(&this->_binary[(_assetOffset / 2) + 12]);
 
     _assetOffset += (8 + 4 + 21) * 2;
 }
@@ -168,7 +156,7 @@ void Deserializer::deserializeMultiSignatureRegistration(Transaction& transactio
     count &= 0xff;
 
     uint8_t lifetime = 0;
-    unpack(&lifetime, &this->_binary[_assetOffset / 2 + 1]);
+    unpack(&lifetime, &this->_binary[_assetOffset / 2 + 2]);
     lifetime &= 0xff;
 
     transaction.asset.multiSignature.min = min;

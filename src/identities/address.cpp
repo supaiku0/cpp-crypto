@@ -152,3 +152,39 @@ bool Ark::Crypto::Identities::Address::validate(
     return validate(Address(addressBytes), networkVersion);
 }
 /**/
+
+/**
+ * @brief Reads 21 bytes from source and returns an base58 encoded string
+ *
+ * @param uint8_t *source
+ *
+ * @return std::string
+ **/
+std::string Ark::Crypto::Identities::Address::base58encode(const uint8_t* source) {
+    // Magic numbers from Base58Check::pubkeyHashToBase58Check
+    uint8_t temp[21 + 4];
+    char out[21 + 4];
+
+    std::vector<uint8_t> buf;
+    std::copy(source, source + 21, std::back_inserter(buf));
+    Base58Check::bytesToBase58Check(&buf[0], temp, 21, out);
+
+    return std::string(out);
+}
+
+/**
+ * @brief Decodes the base58 encoded address
+ *
+ * @param const char* const address
+ *
+ * @return std::vector<uint8_t>
+ **/
+std::vector<uint8_t> Ark::Crypto::Identities::Address::bytesFromBase58Check(const char* const address) {
+    std::vector<std::uint8_t> recipientIdBytes;
+    recipientIdBytes.resize(Ripemd160::HASH_LEN);
+    uint8_t version = 0;
+    Base58Check::pubkeyHashFromBase58Check(address, &recipientIdBytes[0], &version);
+    recipientIdBytes.insert(recipientIdBytes.begin(), version);
+
+    return recipientIdBytes;
+}

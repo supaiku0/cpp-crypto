@@ -34,6 +34,10 @@ private:
     void deserializeDelegateRegistration(Transaction& transaction);
     void deserializeVote(Transaction& transaction);
     void deserializeMultiSignatureRegistration(Transaction& transaction);
+    void deserializeIPFS(Transaction& transaction);
+    void deserializeTimelock(Transaction& transaction);
+    void deserializeMultiPayment(Transaction& transaction);
+    void deserializeDelegateResignation(Transaction& transaction);
     void deserializeSignatures(Transaction& transaction);
     void handleVersionOne(Transaction& transaction);
 
