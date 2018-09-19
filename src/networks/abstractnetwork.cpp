@@ -15,7 +15,7 @@
  * @param Base58PrefixType prefix
  * @return uint8_t
  **/
-const uint8_t Ark::Crypto::Networks::AbstractNetwork::getBase58Prefix(Base58PrefixType base58Prefix) const
+uint8_t Ark::Crypto::Networks::AbstractNetwork::getBase58Prefix(Base58PrefixType base58Prefix) const
 {
     switch (base58Prefix) {
         case 0: return this->base58_.ADDRESS_P2PKH;
@@ -50,7 +50,7 @@ void Ark::Crypto::Networks::AbstractNetwork::setBase58Prefix(Base58PrefixType ba
  * @param Base58PrefixType prefix
  * @return long
  **/
-const long Ark::Crypto::Networks::AbstractNetwork::getBIP32Prefix(BIP32PrefixType bip32Prefix) const
+long Ark::Crypto::Networks::AbstractNetwork::getBIP32Prefix(BIP32PrefixType bip32Prefix) const
 {
      return (bip32Prefix == 0) ? this->bip32_.PREFIX_XPUB : this->bip32_.PREFIX_XPRV;
 }
@@ -78,7 +78,7 @@ void Ark::Crypto::Networks::AbstractNetwork::setBIP32Prefix(BIP32PrefixType bip3
  *
  * @return const char*
  **/
-const bool Ark::Crypto::Networks::AbstractNetwork::isLocked() const { return this->isLocked_; }
+bool Ark::Crypto::Networks::AbstractNetwork::isLocked() const { return this->isLocked_; }
 /**/
 
 /**
@@ -94,5 +94,5 @@ const char* Ark::Crypto::Networks::AbstractNetwork::epoch() const { return this-
  *
  * @return int
  **/
-const int Ark::Crypto::Networks::AbstractNetwork::version() const { return int(base58_.ADDRESS_P2PKH); }
+uint8_t Ark::Crypto::Networks::AbstractNetwork::version() const { return uint8_t(base58_.ADDRESS_P2PKH); }
 /**/

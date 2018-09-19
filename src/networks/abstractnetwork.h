@@ -90,16 +90,16 @@ class AbstractNetwork
 
         virtual ~AbstractNetwork() { }
 
-        const uint8_t getBase58Prefix(Base58PrefixType prefix) const;
+        uint8_t getBase58Prefix(Base58PrefixType prefix) const;
         void setBase58Prefix(Base58PrefixType prefix, uint8_t newByte);
 
-        const long getBIP32Prefix(BIP32PrefixType prefix) const;
+        long getBIP32Prefix(BIP32PrefixType prefix) const;
         void setBIP32Prefix(BIP32PrefixType prefix, long newByte);
 
-        const bool isLocked() const;
+        bool isLocked() const;
 
         const char* epoch() const;
-        const int version() const;
+        uint8_t version() const;
 };
 /**/
 };
