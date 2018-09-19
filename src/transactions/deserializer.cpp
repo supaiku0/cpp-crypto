@@ -72,6 +72,7 @@ void Deserializer::deserializeType(Transaction& transaction)
         break;
     }
     case  Enums::Types::SECOND_SIGNATURE_REGISTRATION: {
+        deserializeSecondSignatureRegistration(transaction);
         break;
     }
     case  Enums::Types::DELEGATE_REGISTRATION: {
@@ -117,6 +118,12 @@ void Deserializer::deserializeTransfer(Transaction& transaction)
     transaction.recipientId = base58encodeAddress(&this->_binary[(_assetOffset / 2) + 12]);
 
     _assetOffset += (8 + 4 + 21) * 2;
+}
+
+void Deserializer::deserializeSecondSignatureRegistration(Transaction& transaction)
+{
+    transaction.asset.signature.publicKey = this->_serialized.substr(_assetOffset, 66);
+    _assetOffset += 66;
 }
 
 void Deserializer::deserializeSignatures(Transaction& transaction)
