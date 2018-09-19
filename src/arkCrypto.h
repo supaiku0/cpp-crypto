@@ -32,6 +32,7 @@
 #include "networks/testnet.h"
 
 #include "transactions/deserializer.h"
+#include "transactions/serializer.h"
 #include "transactions/transaction.h"
 
 #include "utils/message.h"

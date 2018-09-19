@@ -32,8 +32,9 @@ set(COMMON_SRC
 	${PROJECT_SOURCE_DIR}/identities/publickey.cpp
 	${PROJECT_SOURCE_DIR}/identities/wif.cpp
 	${PROJECT_SOURCE_DIR}/networks/abstractnetwork.cpp
-        ${PROJECT_SOURCE_DIR}/transactions/transaction.cpp
         ${PROJECT_SOURCE_DIR}/transactions/deserializer.cpp
+        ${PROJECT_SOURCE_DIR}/transactions/serializer.cpp
+        ${PROJECT_SOURCE_DIR}/transactions/transaction.cpp
         ${PROJECT_SOURCE_DIR}/utils/message.cpp
 )
 
