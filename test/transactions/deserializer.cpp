@@ -68,3 +68,29 @@ TEST(transactions, deserialize_delegate_registration)
     ASSERT_EQ(actual.secondSignature, "304402207da580da4feec955edcb8e8eb36947867b439de3d28d38e58c844fd8c45b564302200e6741b6ad11c2588a57b3afd180df1e9b345d48a9c2ae98be57dced869cf38c");
     ASSERT_EQ(actual.secondSignature, actual.signSignature);
 }
+
+TEST(transactions, deserialize_vote)
+{
+    // vote/second-passphrase.json
+    Ark::Crypto::Transactions::Deserializer deserializer("ff011e0376b87502034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed19200e1f50500000000000101022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d304402204b8bb403e2db7f9599d46d0f5d39f8bb1d0663d875af7ec1154448e98466e86302201e92fb57e13fb729b07e1027fa3d6e3f28e0d5828ed2d7c53a5e8db08cb6d068304402201329882762a42d1af9079c822a9e3feefa47b7476b0afe61440637408958a64402206da179b08e31d9c784fbb23abe2c9b50353ed7881dc29787a5e8ecbee2dfda66");
+    auto actual = deserializer.deserialize();
+
+    ASSERT_EQ(actual.header, 0xFF);
+    ASSERT_EQ(actual.version, 1);
+    ASSERT_EQ(actual.network, 30);
+    ASSERT_EQ(actual.type, Ark::Crypto::Enums::Types::VOTE);
+    ASSERT_EQ(actual.timestamp, 41269366);
+    ASSERT_EQ(actual.senderPublicKey, "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192");
+    ASSERT_EQ(actual.fee, 100000000);
+    ASSERT_EQ(actual.amount, 0);
+    ASSERT_EQ(actual.expiration, 0);
+   // ASSERT_EQ(actual.id, "16f28a180cd6f3ea46c10f358a457989e956e9d355258230d0c7b07acec10b73");
+    ASSERT_EQ(actual.recipientId, "D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib");
+
+    std::vector<std::string> votes = {"+022cca9529ec97a772156c152a00aad155ee6708243e65c9d211a589cb5d43234d"};
+    ASSERT_EQ(actual.asset.votes, votes);
+
+    ASSERT_EQ(actual.signature, "304402204b8bb403e2db7f9599d46d0f5d39f8bb1d0663d875af7ec1154448e98466e86302201e92fb57e13fb729b07e1027fa3d6e3f28e0d5828ed2d7c53a5e8db08cb6d068");
+    ASSERT_EQ(actual.secondSignature, "304402201329882762a42d1af9079c822a9e3feefa47b7476b0afe61440637408958a64402206da179b08e31d9c784fbb23abe2c9b50353ed7881dc29787a5e8ecbee2dfda66");
+    ASSERT_EQ(actual.secondSignature, actual.signSignature);
+}

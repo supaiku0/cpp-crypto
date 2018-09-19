@@ -80,6 +80,7 @@ void Deserializer::deserializeType(Transaction& transaction)
         break;
     }
     case  Enums::Types::VOTE: {
+        deserializeVote(transaction);
         break;
     }
     case  Enums::Types::MULTI_SIGNATURE_REGISTRATION: {
@@ -138,6 +139,21 @@ void Deserializer::deserializeDelegateRegistration(Transaction& transaction)
     transaction.asset.delegate.username = std::string(bytes.begin(), bytes.end());
 
     _assetOffset += (usernameLength + 1) * 2;
+}
+
+void Deserializer::deserializeVote(Transaction& transaction)
+{
+    uint8_t voteLength = 0;
+    unpack(&voteLength, &this->_binary[_assetOffset / 2]);
+    voteLength &= 0xff;
+
+    for (uint8_t i = 0; i < voteLength; i++) {
+        std::string vote = this->_serialized.substr(_assetOffset + 2 + i * 2 * 32, 68);
+        vote = (vote[1] == '1' ? "+" : "-") + vote.substr(2);
+        transaction.asset.votes.push_back(vote);
+    }
+
+    _assetOffset += 2 + voteLength * 34 * 2;
 }
 
 void Deserializer::deserializeSignatures(Transaction& transaction)
