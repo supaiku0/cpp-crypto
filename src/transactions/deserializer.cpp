@@ -1,12 +1,13 @@
 #include "deserializer.h"
 #include "bcl/Sha256.hpp"
 #include "helpers/crypto.h"
-#include "identities/privatekey.h"
+#include "identities/address.h"
 #include "enums/types.h"
 
 #include <iostream>
 #include <numeric>
 #include <iterator>
+#include <algorithm>
 #include <sstream>
 
 namespace Ark {
@@ -31,6 +32,10 @@ Transaction Deserializer::deserialize()
     deserializeHeader(transaction);
     deserializeType(transaction);
     deserializeSignatures(transaction);
+
+    if (transaction.version == 1) {
+        handleVersionOne(transaction);
+    }
 
     std::cout << "AssetOffset: " << (unsigned) _assetOffset << std::endl;
     return transaction;
@@ -127,8 +132,6 @@ void Deserializer::deserializeSignatures(Transaction& transaction)
         ss >> signatureLength;
         signatureLength += 2;
 
-        std::cout << "SIG LENGTH " << signature.substr(2, 2) << " " << signatureLength << std::endl;
-
         transaction.signature = this->_serialized.substr(_assetOffset, signatureLength * 2);
         multiSignatureOffset += signatureLength * 2;
         transaction.secondSignature= this->_serialized.substr((_assetOffset + signatureLength * 2));
@@ -173,6 +176,38 @@ void Deserializer::deserializeSignatures(Transaction& transaction)
 
 }
 
+void Deserializer::handleVersionOne(Transaction& transaction)
+{
+    transaction.signSignature = transaction.secondSignature;
+
+    if (transaction.type == Enums::Types::VOTE) {
+        const auto publicKey = Identities::PublicKey::fromHex(transaction.senderPublicKey.c_str());
+        const auto address = Identities::Address::fromPublicKey(publicKey, transaction.network);
+        transaction.recipientId = address.toString();
+    }
+
+    if (transaction.type == Enums::Types::MULTI_SIGNATURE_REGISTRATION) {
+        std::for_each(transaction.asset.multiSignature.keysgroup.begin(),
+                       transaction.asset.multiSignature.keysgroup.end(),
+           [](std::string& key) { key.insert(0, "+"); });
+    }
+
+    if (!transaction.vendorFieldHex.empty()) {
+        const auto bytes = HexToBytes(transaction.vendorFieldHex.c_str());
+        transaction.vendorField = std::string(bytes.begin(), bytes.end());
+    }
+
+    if (transaction.id.empty()) {
+        transaction.id = transaction.getId();
+    }
+
+    if (transaction.type == Enums::Types::SECOND_SIGNATURE_REGISTRATION ||
+            transaction.type == Enums::Types::MULTI_SIGNATURE_REGISTRATION) {
+        const auto publicKey = Identities::PublicKey::fromHex(transaction.senderPublicKey.c_str());
+        const auto address = Identities::Address::fromPublicKey(publicKey, transaction.network);
+        transaction.recipientId = address.toString();
+    }
+}
 
 }
 }

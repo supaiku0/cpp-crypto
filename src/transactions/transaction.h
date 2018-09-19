@@ -62,6 +62,7 @@ public:
     std::string senderPublicKey = "";
     std::string signature = "";
     std::string secondSignature = "";
+    std::string signSignature = "";
     std::string vendorField = "";
     std::string vendorFieldHex = "";
     uint32_t expiration = 0;

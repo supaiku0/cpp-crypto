@@ -31,6 +31,7 @@ private:
     void deserializeType(Transaction& transaction);
     void deserializeTransfer(Transaction& transaction);
     void deserializeSignatures(Transaction& transaction);
+    void handleVersionOne(Transaction& transaction);
 
     std::string _serialized;
     std::vector<uint8_t> _binary;
