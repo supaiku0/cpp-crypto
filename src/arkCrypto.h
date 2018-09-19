@@ -31,6 +31,7 @@
 #include "networks/mainnet.h"
 #include "networks/testnet.h"
 
+#include "transactions/deserializer.h"
 #include "transactions/transaction.h"
 
 #include "utils/message.h"

@@ -59,7 +59,7 @@ class Base58Check final {
 	// Computes the 4-byte hash of the given byte array, concatenates it, and converts it to Base58Check.
 	// This overwrites data and temp for indices 0 <= i < len+4. The caller is responsible for leaving 4 free bytes
 	// starting at data[len], allocating len+4 bytes for temp, and allocating enough space in outStr. Not constant-time.
-	private: static void bytesToBase58Check(std::uint8_t data[], std::uint8_t temp[], std::size_t dataLen, char *outStr);
+    public: static void bytesToBase58Check(std::uint8_t data[], std::uint8_t temp[], std::size_t dataLen, char *outStr);
 	
 	
 	// Converts the given Base58Check string to an array of bytes. Returns true if the conversion succeeded;

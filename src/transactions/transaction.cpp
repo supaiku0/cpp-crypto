@@ -1,31 +1,13 @@
 #include "transaction.h"
 #include "bcl/Sha256.hpp"
+#include "helpers/crypto.h"
+#include "helpers/helpers.h"
 #include "identities/privatekey.h"
 #include "enums/types.h"
+
 #include <iostream>
-#include <numeric>
 
 using namespace Ark::Crypto::Identities;
-
-
-template <typename T>
-static inline void pack (std::vector< uint8_t >& dst, T& data) {
-    const uint8_t * src = reinterpret_cast<const uint8_t* >(&data);
-    dst.insert (dst.end (), src, src + sizeof (T));
-}
-
-template <typename T>
-static inline void unpack (std::vector <uint8_t >& src, int index, T& data) {
-    copy (&src[index], &src[index + sizeof (T)], &data);
-}
-
-static std::string join(const std::vector<std::string>& strings) {
-    return std::accumulate(strings.begin(), strings.end(), std::string(),
-        [](const std::string& a, const std::string& b) -> std::string {
-            return a + b;
-        }
-    );
-}
 
 Ark::Crypto::Transactions::Transaction::Transaction()
 {
@@ -34,17 +16,36 @@ Ark::Crypto::Transactions::Transaction::Transaction()
 
 std::string Ark::Crypto::Transactions::Transaction::getId() const
 {
-    std::vector<uint8_t> bytes = this->toBytes();
+    auto bytes = this->toBytes();
     const auto shaHash = Sha256::getHash(&bytes[0], bytes.size());
-    std::cout << shaHash.value << std::endl;
-    std::cout << shaHash.HASH_LEN << std::endl;
     memcpy(&bytes[0], shaHash.value, shaHash.HASH_LEN);
+    return BytesToHex(&bytes[0], &bytes[0] + shaHash.HASH_LEN);
+}
 
+std::string Ark::Crypto::Transactions::Transaction::sign(const char* passphrase)
+{
+    PrivateKey privateKey = PrivateKey::fromPassphrase(passphrase);
+    this->senderPublicKey = Identities::PublicKey::fromPrivateKey(privateKey).toString();
 
-    const auto hex = BytesToHex(&bytes[0], &bytes[0] + shaHash.HASH_LEN);
-    std::cout << hex << std::endl;
+    const auto bytes = this->toBytes();
+    const auto hash = Sha256::getHash(&bytes[0], bytes.size());
 
-    return hex;
+    std::vector<uint8_t> buffer;
+    cryptoSign(hash, privateKey, buffer);
+
+    return BytesToHex(buffer.begin(), buffer.end());
+}
+
+std::string Ark::Crypto::Transactions::Transaction::secondSign(const char* passphrase)
+{
+    PrivateKey privateKey = PrivateKey::fromPassphrase(passphrase);
+    const auto bytes = this->toBytes(false);
+    const auto hash = Sha256::getHash(&bytes[0], bytes.size());
+
+    std::vector<uint8_t> buffer;
+    cryptoSign(hash, privateKey, buffer);
+
+    return BytesToHex(buffer.begin(), buffer.end());
 }
 
 std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSignature, bool skipSecondSignature) const
@@ -99,12 +100,12 @@ std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSi
         bytes.insert(std::end(bytes), std::begin(joined), std::end(joined));
     }
 
-    if (!skipSignature) {
+    if (!skipSignature && !this->signature.empty()) {
         const auto signatureBytes = HexToBytes(this->signature.c_str());
         bytes.insert(std::end(bytes), std::begin(signatureBytes), std::end(signatureBytes));
     }
 
-    if (!skipSecondSignature) {
+    if (!skipSecondSignature && !this->secondSignature.empty()) {
         const auto secondSignatureBytes = HexToBytes(this->secondSignature.c_str());
         bytes.insert(std::end(bytes), std::begin(secondSignatureBytes), std::end(secondSignatureBytes));
     }

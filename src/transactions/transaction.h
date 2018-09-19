@@ -20,27 +20,22 @@ namespace Ark {
 namespace Crypto {
 namespace Transactions {
 
-struct SecondSignature {
-    std::string publicKey;
-};
+struct TransactionAsset {
+    struct {
+        std::string publicKey;
+    } signature;
 
-struct DelegateRegistration {
-    std::string username;
-};
+    struct {
+        std::string username;
+    } delegate;
 
-struct MultiSignature {
-    uint8_t min;
-    uint8_t lifetime;
-    std::vector<std::string> keysgroup;
-};
-
-union TransactionAsset {
-    struct SecondSignature signature;
-    struct DelegateRegistration delegate;
     std::vector<std::string> votes;
-    struct MultiSignature multiSignature;
 
-    ~TransactionAsset() {}
+    struct {
+        uint8_t min;
+        uint8_t lifetime;
+        std::vector<std::string> keysgroup;
+    } multiSignature;
 };
 
 
@@ -49,10 +44,10 @@ class Transaction
 public:
     Transaction();
     std::string getId() const;
-    std::string sign(std::string& passphrase) const;
-    std::string secondSign(std::string& passphrase) const;
+    std::string sign(const char* passphrase);
+    std::string secondSign(const char* passphrase);
     bool verify() const;
-    bool secondVerify(std::string& secondPublicKey) const;
+    bool secondVerify(const char* secondPublicKey) const;
     std::vector<uint8_t> toBytes(bool skipSignature = true, bool skipSecondSignature = true) const;
 
     uint8_t header = 0;
@@ -65,9 +60,8 @@ public:
     std::string id = "";
     std::string recipientId = "";
     std::string senderPublicKey = "";
-    std::string secondSignature = "";
     std::string signature = "";
-    std::string signSignature = "";
+    std::string secondSignature = "";
     std::string vendorField = "";
     std::string vendorFieldHex = "";
     uint32_t expiration = 0;
