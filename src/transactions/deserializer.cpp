@@ -76,6 +76,7 @@ void Deserializer::deserializeType(Transaction& transaction)
         break;
     }
     case  Enums::Types::DELEGATE_REGISTRATION: {
+        deserializeDelegateRegistration(transaction);
         break;
     }
     case  Enums::Types::VOTE: {
@@ -124,6 +125,19 @@ void Deserializer::deserializeSecondSignatureRegistration(Transaction& transacti
 {
     transaction.asset.signature.publicKey = this->_serialized.substr(_assetOffset, 66);
     _assetOffset += 66;
+}
+
+void Deserializer::deserializeDelegateRegistration(Transaction& transaction)
+{
+    uint8_t usernameLength = 0;
+    unpack(&usernameLength, &this->_binary[_assetOffset / 2]);
+    usernameLength &= 0xff;
+
+    std::string username = this->_serialized.substr((_assetOffset / 2 + 1) * 2, usernameLength * 2);
+    std::vector<uint8_t> bytes = HexToBytes(username.c_str());
+    transaction.asset.delegate.username = std::string(bytes.begin(), bytes.end());
+
+    _assetOffset += (usernameLength + 1) * 2;
 }
 
 void Deserializer::deserializeSignatures(Transaction& transaction)

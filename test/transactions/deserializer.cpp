@@ -46,3 +46,25 @@ TEST(transactions, deserialize_second_signature_registration)
     const auto address = Ark::Crypto::Identities::Address::fromPublicKey(publicKey, actual.network);
     ASSERT_EQ(actual.recipientId, address.toString());
 }
+
+TEST(transactions, deserialize_delegate_registration)
+{
+    // delegate_registration/second-passphrase.json
+    Ark::Crypto::Transactions::Deserializer deserializer("ff011e02b0b87502034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed19200f90295000000000009626f6c646e696e6a613045022100f21b742fa052cd18de43328e1d068539ba7cbe9d33a9dcbd862a82871383955d0220053b06d22ed3e3ad6168c6b27aa0ec68e7e40958c7709aec0e1555087ea9ad94304402207da580da4feec955edcb8e8eb36947867b439de3d28d38e58c844fd8c45b564302200e6741b6ad11c2588a57b3afd180df1e9b345d48a9c2ae98be57dced869cf38c");
+    auto actual = deserializer.deserialize();
+
+    ASSERT_EQ(actual.header, 0xFF);
+    ASSERT_EQ(actual.version, 1);
+    ASSERT_EQ(actual.network, 30);
+    ASSERT_EQ(actual.type, Ark::Crypto::Enums::Types::DELEGATE_REGISTRATION);
+    ASSERT_EQ(actual.timestamp, 41269424);
+    ASSERT_EQ(actual.senderPublicKey, "034151a3ec46b5670a682b0a63394f863587d1bc97483b1b6c70eb58e7f0aed192");
+    ASSERT_EQ(actual.fee, 2500000000);
+    ASSERT_EQ(actual.amount, 0);
+    ASSERT_EQ(actual.expiration, 0);
+    ASSERT_EQ(actual.asset.delegate.username, "boldninja");
+
+    ASSERT_EQ(actual.signature, "3045022100f21b742fa052cd18de43328e1d068539ba7cbe9d33a9dcbd862a82871383955d0220053b06d22ed3e3ad6168c6b27aa0ec68e7e40958c7709aec0e1555087ea9ad94");
+    ASSERT_EQ(actual.secondSignature, "304402207da580da4feec955edcb8e8eb36947867b439de3d28d38e58c844fd8c45b564302200e6741b6ad11c2588a57b3afd180df1e9b345d48a9c2ae98be57dced869cf38c");
+    ASSERT_EQ(actual.secondSignature, actual.signSignature);
+}

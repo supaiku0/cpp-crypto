@@ -31,6 +31,7 @@ private:
     void deserializeType(Transaction& transaction);
     void deserializeTransfer(Transaction& transaction);
     void deserializeSecondSignatureRegistration(Transaction& transaction);
+    void deserializeDelegateRegistration(Transaction& transaction);
     void deserializeSignatures(Transaction& transaction);
     void handleVersionOne(Transaction& transaction);
 
