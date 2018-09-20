@@ -49,6 +49,16 @@ std::string Ark::Crypto::Transactions::Transaction::secondSign(const char* passp
     return BytesToHex(buffer.begin(), buffer.end());
 }
 
+bool Ark::Crypto::Transactions::Transaction::verify() const
+{
+    return this->internalVerify(this->senderPublicKey, this->toBytes(), this->signature);
+}
+
+bool Ark::Crypto::Transactions::Transaction::secondVerify(const char* secondPublicKey) const
+{
+    return this->internalVerify(secondPublicKey, this->toBytes(false), this->secondSignature);
+}
+
 std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSignature, bool skipSecondSignature) const
 {
     std::vector<uint8_t> bytes;
@@ -113,5 +123,13 @@ std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSi
     }
 
     return bytes;
+}
+
+bool Ark::Crypto::Transactions::Transaction::internalVerify(std::string publicKey, std::vector<uint8_t> bytes, std::string signature) const
+{
+    const auto hash = Sha256::getHash(&bytes[0], bytes.size());
+    const auto key = Identities::PublicKey::fromHex(publicKey.c_str());
+    auto signatureBytes = HexToBytes(signature.c_str());
+    return cryptoVerify(key, hash, signatureBytes);
 }
 

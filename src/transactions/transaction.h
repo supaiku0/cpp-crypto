@@ -70,6 +70,10 @@ public:
     uint64_t amount = 0;
     uint64_t fee = 0;
     uint64_t timelock = 0;
+
+private:
+    bool internalVerify(std::string publicKey, std::vector<uint8_t> bytes, std::string signature) const;
+
 };
 
 }
