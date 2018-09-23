@@ -4,11 +4,9 @@
 #include "identities/address.h"
 #include "enums/types.h"
 
-#include <iostream>
 #include <numeric>
 #include <iterator>
 #include <algorithm>
-#include <sstream>
 
 namespace Ark {
 namespace Crypto {
@@ -164,19 +162,20 @@ void Deserializer::deserializeMultiSignatureRegistration(Transaction& transactio
     _assetOffset += 6 + count * 66;
 }
 
+static uint8_t parseSignatureLength(const std::string& hex) {
+    assert(hex.length() <= 2);
+    unsigned int length;
+    sscanf(hex.c_str(), "%x", &length);
+    return static_cast<uint8_t>(length + 2);
+}
+
 void Deserializer::deserializeSignatures(Transaction& transaction)
 {
     std::string signature = this->_serialized.substr(_assetOffset);
 
     size_t multiSignatureOffset = 0;
     if (!signature.empty()) {
-        size_t signatureLength = 0;
-
-        std::stringstream ss;
-        ss << std::hex << signature.substr(2, 2);
-        ss >> signatureLength;
-        signatureLength += 2;
-
+        size_t signatureLength = parseSignatureLength(signature.substr(2, 2));
         transaction.signature = this->_serialized.substr(_assetOffset, signatureLength * 2);
         multiSignatureOffset += signatureLength * 2;
         transaction.secondSignature= this->_serialized.substr((_assetOffset + signatureLength * 2));
@@ -186,13 +185,7 @@ void Deserializer::deserializeSignatures(Transaction& transaction)
                 transaction.secondSignature = "";
             } else {
 
-                size_t secondSignatureLength = 0;
-
-                std::stringstream ss;
-                ss << std::hex << transaction.secondSignature.substr(2, 2);
-                ss >> secondSignatureLength;
-                secondSignatureLength += 2;
-
+                size_t secondSignatureLength = parseSignatureLength(transaction.secondSignature.substr(2, 2));
                 transaction.secondSignature = transaction.secondSignature.substr(0, secondSignatureLength * 2);
                 multiSignatureOffset += secondSignatureLength * 2;
             }
@@ -204,12 +197,7 @@ void Deserializer::deserializeSignatures(Transaction& transaction)
 
             while (!signatures.empty()) {
 
-                size_t multiSignatureLength = 0;
-                std::stringstream ss;
-                ss << std::hex << signatures.substr(2, 2);
-                ss >> multiSignatureLength;
-                multiSignatureLength += 2;
-
+                size_t multiSignatureLength = parseSignatureLength(signatures.substr(2, 2));
                 if (multiSignatureLength > 0) {
                     transaction.signatures.push_back(signatures.substr(0, multiSignatureLength * 2));
                 }

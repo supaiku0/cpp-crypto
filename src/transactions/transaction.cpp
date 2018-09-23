@@ -6,8 +6,6 @@
 #include "identities/address.h"
 #include "enums/types.h"
 
-#include <iostream>
-
 using namespace Ark::Crypto::Identities;
 
 Ark::Crypto::Transactions::Transaction::Transaction()
