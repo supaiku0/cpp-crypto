@@ -29,7 +29,7 @@ class Fee
         /**
          * @brief The default transaction fees array.
          **/
-        unsigned int fees_[9] = {
+        uint64_t fees_[9] = {
             Fees::TRANSFER,
             Fees::SECOND_SIGNATURE_REGISTRATION,
             Fees::DELEGATE_REGISTRATION,
@@ -43,8 +43,8 @@ class Fee
         /**/
     public:
         Fee(){};
-        unsigned int get(int type);
-        void set(const int type, const unsigned int fee);
+        uint64_t get(int type);
+        void set(const int type, const uint64_t fee);
 };
 /**/
 

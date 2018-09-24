@@ -13,9 +13,9 @@
  * @brief Get the transaction fee for the given type.
  *
  * @param const int type
- * @return int
+ * @return uint64_t
  **/
-unsigned int Ark::Crypto::Configuration::Fee::get(int type)
+uint64_t Ark::Crypto::Configuration::Fee::get(int type)
 {
     return this->fees_[type];
 };
@@ -25,12 +25,12 @@ unsigned int Ark::Crypto::Configuration::Fee::get(int type)
  * @brief Set the transaction fee for the given type.
  *
  * @param const int type
- * @param const int fee
+ * @param const uint64_t fee
  **/
 void Ark::Crypto::Configuration::Fee::set(
         const int type,
-        const unsigned int fee
+        const uint64_t fee
 ) {
-    this->fees_[type] = (unsigned int)fee;
+    this->fees_[type] = fee;
 };
 /**/
