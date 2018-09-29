@@ -32,7 +32,8 @@ std::string Ark::Crypto::Transactions::Transaction::sign(const char* passphrase)
     std::vector<uint8_t> buffer;
     cryptoSign(hash, privateKey, buffer);
 
-    return BytesToHex(buffer.begin(), buffer.end());
+    this->signature = BytesToHex(buffer.begin(), buffer.end());
+    return this->signature;
 }
 
 std::string Ark::Crypto::Transactions::Transaction::secondSign(const char* passphrase)
@@ -67,7 +68,8 @@ std::vector<uint8_t> Ark::Crypto::Transactions::Transaction::toBytes(bool skipSi
     const auto senderKeyBytes = HexToBytes(this->senderPublicKey.c_str());
     bytes.insert(std::end(bytes), std::begin(senderKeyBytes), std::end(senderKeyBytes));
 
-    if (!this->recipientId.empty()) {
+    const auto skipRecipientId = type == Enums::Types::SECOND_SIGNATURE_REGISTRATION || type == Enums::Types::MULTI_SIGNATURE_REGISTRATION;
+    if (!this->recipientId.empty() && !skipRecipientId) {
         std::vector<std::uint8_t> recipientIdBytes = Address::bytesFromBase58Check(this->recipientId.c_str());
         bytes.insert(std::end(bytes), std::begin(recipientIdBytes), std::end(recipientIdBytes));
     } else {

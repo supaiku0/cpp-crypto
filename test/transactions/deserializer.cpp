@@ -20,6 +20,7 @@ TEST(transactions, deserialize_transfer)
     ASSERT_STREQ("ecf558fbddd62ae42edcfcba02f402d987a94b72a7636ef1121e8625487e2a1e", actual.id.c_str());
     ASSERT_STREQ("D61mfSggzbvQgTUe6JhYKH2doHaqJ3Dyib", actual.recipientId.c_str());
     ASSERT_STREQ("304402205616d6e361439d67a5c2067bbfc8fce61b93061a4fa113315a1c5cf965ff6f3202200a1d99caaa98aeebcec04edd5365352500addb830c79f49b9de484ec616bb1e1", actual.signature.c_str());
+    ASSERT_TRUE(actual.verify());
 }
 
 
@@ -41,6 +42,7 @@ TEST(transactions, deserialize_second_signature_registration)
     ASSERT_STREQ("6d1615924d172d352c8f44d4ded84cbbece3c03ebb3e4fc3f3334784ae332590", actual.id.c_str());
     ASSERT_STREQ("03699e966b2525f9088a6941d8d94f7869964a000efe65783d78ac82e1199fe609", actual.asset.signature.publicKey.c_str());
     ASSERT_STREQ("304402202aab49477dd3531e4473196d08fbd7c00ebb79223d5eaaeaf02c52c4041a86cf02201a7d82655f9b1d22af3ea94e6f183649bb4610cdeca3b9e20d6c8773f869831c", actual.signature.c_str());
+    ASSERT_TRUE(actual.verify());
 
     // special case as the type 1 transaction itself has no recipientId
     const auto publicKey = Ark::Crypto::Identities::PublicKey::fromHex(actual.senderPublicKey.c_str());
@@ -65,9 +67,9 @@ TEST(transactions, deserialize_delegate_registration)
     ASSERT_EQ(0, actual.expiration);
     ASSERT_STREQ("bf7e018ff9c0066f7a9f51e95d3f78c08cad5dd8581325d630d64350181a91bb", actual.id.c_str());
     ASSERT_STREQ("boldninja", actual.asset.delegate.username.c_str());
-
     ASSERT_STREQ("3045022100f21b742fa052cd18de43328e1d068539ba7cbe9d33a9dcbd862a82871383955d0220053b06d22ed3e3ad6168c6b27aa0ec68e7e40958c7709aec0e1555087ea9ad94", actual.signature.c_str());
     ASSERT_STREQ("304402207da580da4feec955edcb8e8eb36947867b439de3d28d38e58c844fd8c45b564302200e6741b6ad11c2588a57b3afd180df1e9b345d48a9c2ae98be57dced869cf38c", actual.secondSignature.c_str());
+    ASSERT_TRUE(actual.verify());
 }
 
 TEST(transactions, deserialize_vote)
@@ -94,6 +96,7 @@ TEST(transactions, deserialize_vote)
 
     ASSERT_STREQ("304402204b8bb403e2db7f9599d46d0f5d39f8bb1d0663d875af7ec1154448e98466e86302201e92fb57e13fb729b07e1027fa3d6e3f28e0d5828ed2d7c53a5e8db08cb6d068", actual.signature.c_str());
     ASSERT_STREQ("304402201329882762a42d1af9079c822a9e3feefa47b7476b0afe61440637408958a64402206da179b08e31d9c784fbb23abe2c9b50353ed7881dc29787a5e8ecbee2dfda66", actual.secondSignature.c_str());
+    ASSERT_TRUE(actual.verify());
 }
 
 TEST(transactions, deserialize_multi_signature_registration)
@@ -141,6 +144,8 @@ TEST(transactions, deserialize_multi_signature_registration)
     for (uint8_t i = 0; i < signatures.size(); i++) {
         ASSERT_STREQ(signatures[i].c_str(), actual.signatures[i].c_str());
     }
+
+    ASSERT_TRUE(actual.verify());
 
     // special case as the type 4 transaction itself has no recipientId
     const auto publicKey = Ark::Crypto::Identities::PublicKey::fromHex(actual.senderPublicKey.c_str());
